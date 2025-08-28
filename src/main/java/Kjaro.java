@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Kjaro {
-    private final static String LINE = "________________________________\n";
-    private final static String ERR_LINE = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+    private final static String LINE = "________________________________";
+    private final static String ERR_LINE = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
     private final static String INDENT = "    ";
     private static Task[] tasks = new Task[100];
     private static int numberOfTasks = 0;
@@ -43,9 +43,9 @@ public class Kjaro {
 
     // Prints a single-line formatted error message
     public static void printError(String message) {
-        System.err.println(INDENT + ERR_LINE
-                + INDENT + message + "\n"
-                + INDENT + ERR_LINE);
+        System.out.println(INDENT + ERR_LINE);
+        System.out.println(INDENT + message);
+        System.out.println(INDENT + ERR_LINE);
     }
 
     // Adds a new task into the tasks list
@@ -53,13 +53,14 @@ public class Kjaro {
         tasks[numberOfTasks] = task;
         numberOfTasks++;
         printMessage("Task added.", 
-            "  " + task.toString(), 
+            task.toString(), 
             "Now there are " + numberOfTasks + " task(s) in your list!");
     }
 
     // Prints the list of tasks
     public static void printList() {
         System.out.println(INDENT + LINE);
+        System.out.println(INDENT + "Here are your tasks! You have " + numberOfTasks + " tasks!");
         for (int i = 0; i < numberOfTasks; i++) {
             System.out.println(INDENT + (i + 1) + ": " + tasks[i]);
         }
@@ -73,13 +74,6 @@ public class Kjaro {
         isRunning = false;
     }
 
-    public static void manageOneArg(String arg) {
-        switch (arg) {
-        
-        default:
-            printError("Invalid Command!");
-        }
-    }
     // Managing commands containing two or more arguments.
     public static void parseInput(String input) {
         String[] args = input.split(" ");
@@ -93,7 +87,7 @@ public class Kjaro {
             break;
         case ("list"):
             if (args.length != 1) {
-                printError("I only have one list");
+                printError("I only have one list!");
                 break;
             }
             printList();
@@ -141,7 +135,7 @@ public class Kjaro {
                 return;
             }
             tasks[taskNumber - 1].markAsDone();
-            String doneMessage = "Alright! I've marked task " + taskNumber + " as complete!" + "\n";
+            String doneMessage = "Alright! I've marked task " + taskNumber + " as complete!";
             printMessage(doneMessage, tasks[taskNumber - 1].toString());
         } 
         catch (NumberFormatException e) {
@@ -158,8 +152,7 @@ public class Kjaro {
                 return;
             }
             tasks[taskNumber - 1].markAsUndone();
-            String undoneMessage = "Task " + taskNumber + " has been marked undone, you'll get it next time."
-                    + "\n";
+            String undoneMessage = "Task " + taskNumber + " has been marked undone, you'll get it next time.";
             printMessage(undoneMessage, tasks[taskNumber - 1].toString());
         } 
         catch (NumberFormatException e) {
@@ -208,6 +201,8 @@ public class Kjaro {
             printError("Deadline needs a due date, use /by <date> to set it!");
         } else if (deadlineName.isEmpty()) {
             printError("Missing task name!");
+        } else if (deadlineDate.isEmpty()) { 
+            printError("Missing due date! (/by)");
         } else {
             addToTasks(new Deadline(deadlineName.trim(), deadlineDate.trim()));
         }

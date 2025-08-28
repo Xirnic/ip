@@ -1,0 +1,29 @@
+bleh
+todo cs2103 tutorial
+todo everything /from now
+todo everything /by now
+mark 1
+list
+mark 2
+unmark 1
+list
+list 2
+event birthday party /from 8am /to 8pm
+event nothing /from never /to
+event nothing
+event /from /to
+event nothing /from /to now
+deadline
+deadline something
+deadline something /by
+deadline something /by tomorrow
+deadline /by tomorrow
+list
+mark 3
+list
+mark 3
+list
+mark 2
+unmark 1
+list
+bye kjaro!
