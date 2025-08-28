@@ -6,8 +6,7 @@ public class Kjaro {
     private final static String LINE = "________________________________";
     private final static String ERR_LINE = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
     private final static String INDENT = "    ";
-    private static Task[] tasks = new Task[100];
-    private static int numberOfTasks = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static boolean isRunning = true;
     public static Scanner reader = new Scanner(System.in);
 
@@ -19,7 +18,7 @@ public class Kjaro {
                 "|_|\\_\\/ |\\__,_|_|  \\___/ \r\n" + //
                 "    |__/                 \n";
 
-        System.out.println(LINE + logo + LINE + "Hello! I'm Kjaro\n"
+        System.out.println(LINE + "\n" + logo + LINE + "\n" + "Hello! I'm Kjaro\n"
                 + "What can I do for you?\n" + LINE);
 
         while (isRunning) {
@@ -50,19 +49,18 @@ public class Kjaro {
 
     // Adds a new task into the tasks list
     public static void addToTasks(Task task) {
-        tasks[numberOfTasks] = task;
-        numberOfTasks++;
+        tasks.add(task);
         printMessage("Task added.", 
             task.toString(), 
-            "Now there are " + numberOfTasks + " task(s) in your list!");
+            "Now there are " + tasks.size() + " task(s) in your list!");
     }
 
     // Prints the list of tasks
     public static void printList() {
         System.out.println(INDENT + LINE);
-        System.out.println(INDENT + "Here are your tasks! You have " + numberOfTasks + " tasks!");
-        for (int i = 0; i < numberOfTasks; i++) {
-            System.out.println(INDENT + (i + 1) + ": " + tasks[i]);
+        System.out.println(INDENT + "Here are your task(s)! You have " + tasks.size() + " task(s)!");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(INDENT + (i + 1) + ": " + tasks.get(i));
         }
         System.out.println(INDENT + LINE);
     }
@@ -108,6 +106,14 @@ public class Kjaro {
             }
             break;
 
+        case ("delete"):
+            if (args.length == 2) {
+                deleteTask(args[1]);
+            } else {
+                printError("Use: delete <task number> to delete tasks!");
+            }
+            break;
+
         case ("todo"):
             addToDo(args);
             break; 
@@ -130,13 +136,13 @@ public class Kjaro {
     public static void markTask(String taskNo) {
         try {
             int taskNumber = Integer.valueOf(taskNo);
-            if (taskNumber > numberOfTasks || taskNumber <= 0) {
+            if (taskNumber > tasks.size() || taskNumber <= 0) {
                 printError("That's not a markable task!");
                 return;
             }
-            tasks[taskNumber - 1].markAsDone();
+            tasks.get(taskNumber - 1).markAsDone();
             String doneMessage = "Alright! I've marked task " + taskNumber + " as complete!";
-            printMessage(doneMessage, tasks[taskNumber - 1].toString());
+            printMessage(doneMessage, tasks.get(taskNumber - 1).toString());
         } 
         catch (NumberFormatException e) {
             printError("Input a number for marking!");
@@ -147,18 +153,36 @@ public class Kjaro {
     public static void unmarkTask(String taskNo) {
         try {
             int taskNumber = Integer.valueOf(taskNo);
-            if (taskNumber > numberOfTasks || taskNumber <= 0) {
+            if (taskNumber > tasks.size() || taskNumber <= 0) {
                 printError("That's not a markable task!");
                 return;
             }
-            tasks[taskNumber - 1].markAsUndone();
+            tasks.get(taskNumber - 1).markAsUndone();
             String undoneMessage = "Task " + taskNumber + " has been marked undone, you'll get it next time.";
-            printMessage(undoneMessage, tasks[taskNumber - 1].toString());
+            printMessage(undoneMessage, tasks.get(taskNumber - 1).toString());
         } 
         catch (NumberFormatException e) {
         printError("Make sure to use a number for marking!");
         }
     }
+
+    public static void deleteTask(String taskNo) {
+        try {
+            int taskNumber = Integer.valueOf(taskNo);
+            if (taskNumber > tasks.size() || taskNumber <= 0) {
+                printError("That's not a deletable task!");
+                return;
+            }
+            String deleteMessage = "Alright! I've removed task " + taskNumber + "!";
+            printMessage(deleteMessage,
+                 tasks.get(taskNumber - 1).toString(),
+                 "You now have " + (tasks.size() -  1) + " task(s)");
+            tasks.remove(taskNumber - 1);
+        } 
+        catch (NumberFormatException e) {
+            printError("Input a number for deleting!");
+        }
+    }    
 
     // Parses input for todos, adds it to tasks if it's valid
     public static void addToDo(String[] args) {
@@ -195,6 +219,7 @@ public class Kjaro {
         for (int i = byIndex + 1; i < args.length; i++) {
             deadlineDate += args[i] + " ";
         }
+        
         if (args.length == 1) {
             printError("Missing arguments! Use: deadline <task name> /by <due date");
         } else if (byIndex == - 1) {

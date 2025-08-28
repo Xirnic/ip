@@ -1,10 +1,12 @@
-________________________________ _  __ _                 
+________________________________
+ _  __ _                 
 | |/ /(_) __ _ _ __ ___  
 | ' / | |/ _` | '__/ _ \ 
 | . \ | | (_| | | | (_) |
 |_|\_\/ |\__,_|_|  \___/ 
     |__/                 
-________________________________Hello! I'm Kjaro
+________________________________
+Hello! I'm Kjaro
 What can I do for you?
 ________________________________
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,7 +28,7 @@ ________________________________
     [T][X] cs2103 tutorial
     ________________________________
     ________________________________
-    Here are your tasks! You have 1 tasks!
+    Here are your task(s)! You have 1 task(s)!
     1: [T][X] cs2103 tutorial
     ________________________________
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,7 +39,7 @@ ________________________________
     [T][ ] cs2103 tutorial
     ________________________________
     ________________________________
-    Here are your tasks! You have 1 tasks!
+    Here are your task(s)! You have 1 task(s)!
     1: [T][ ] cs2103 tutorial
     ________________________________
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,7 +80,7 @@ ________________________________
     Missing task name!
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ________________________________
-    Here are your tasks! You have 3 tasks!
+    Here are your task(s)! You have 3 task(s)!
     1: [T][ ] cs2103 tutorial
     2: [E][ ] birthday party (from: 8am to: 8pm)
     3: [D][ ] something (by: tomorrow)
@@ -88,7 +90,7 @@ ________________________________
     [D][X] something (by: tomorrow)
     ________________________________
     ________________________________
-    Here are your tasks! You have 3 tasks!
+    Here are your task(s)! You have 3 task(s)!
     1: [T][ ] cs2103 tutorial
     2: [E][ ] birthday party (from: 8am to: 8pm)
     3: [D][X] something (by: tomorrow)
@@ -98,7 +100,7 @@ ________________________________
     [D][X] something (by: tomorrow)
     ________________________________
     ________________________________
-    Here are your tasks! You have 3 tasks!
+    Here are your task(s)! You have 3 task(s)!
     1: [T][ ] cs2103 tutorial
     2: [E][ ] birthday party (from: 8am to: 8pm)
     3: [D][X] something (by: tomorrow)
@@ -112,7 +114,7 @@ ________________________________
     [T][ ] cs2103 tutorial
     ________________________________
     ________________________________
-    Here are your tasks! You have 3 tasks!
+    Here are your task(s)! You have 3 task(s)!
     1: [T][ ] cs2103 tutorial
     2: [E][X] birthday party (from: 8am to: 8pm)
     3: [D][X] something (by: tomorrow)
