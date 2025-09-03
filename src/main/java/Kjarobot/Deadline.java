@@ -1,9 +1,12 @@
 package Kjarobot;
 
-public class Deadline extends Task {
-    private String dueDate;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String taskName, String dueDate) {
+public class Deadline extends Task {
+    private LocalDate dueDate;
+
+    public Deadline(String taskName, LocalDate dueDate) {
         super(taskName);
         this.dueDate = dueDate;
     }
@@ -11,7 +14,7 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() 
-                + " (by: " + dueDate + ")";
+                + " (by: " + dueDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
     }
 
     @Override

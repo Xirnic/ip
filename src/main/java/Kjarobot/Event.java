@@ -1,10 +1,13 @@
 package Kjarobot;
 
-public class Event extends Task {
-    private String fromDate;
-    private String toDate;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String taskName, String fromDate, String toDate) {
+public class Event extends Task {
+    private LocalDate fromDate;
+    private LocalDate toDate;
+
+    public Event(String taskName, LocalDate fromDate, LocalDate toDate) {
         super(taskName);
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -13,8 +16,8 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString()
-                + " (from: " + fromDate
-                + " to: " + toDate + ")";
+                + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+                + " to: " + toDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
     }
 
     @Override
