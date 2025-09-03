@@ -1,3 +1,5 @@
+package Kjarobot;
+
 public class ToDo extends Task {
     
     public ToDo(String taskName) {
@@ -7,5 +9,10 @@ public class ToDo extends Task {
     @Override
     public String toString() {
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String toSave() {
+        return "T |" + super.toSave();
     }
 }

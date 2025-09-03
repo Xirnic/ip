@@ -1,3 +1,5 @@
+package Kjarobot;
+
 public class Deadline extends Task {
     private String dueDate;
 
@@ -9,7 +11,13 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() 
-            + " (by: " + dueDate + ")";
+                + " (by: " + dueDate + ")";
+    }
+
+    @Override
+    public String toSave() {
+        return "D |" + super.toSave() 
+                + " | " + dueDate;
     }
     
 }

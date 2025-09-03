@@ -1,26 +1,24 @@
+package Kjarobot;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Kjaro {
-    private final static String LINE = "________________________________";
-    private final static String ERR_LINE = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-    private final static String INDENT = "    ";
     private static ArrayList<Task> tasks = new ArrayList<>();
     public static boolean isRunning = true;
     public static Scanner reader = new Scanner(System.in);
+    public static File saveFile = new File("data/KjaroSaveFile.txt");
+
 
     public static void main(String[] args) {
-        String logo = " _  __ _                 \r\n" + //
-                "| |/ /(_) __ _ _ __ ___  \r\n" + //
-                "| ' / | |/ _` | '__/ _ \\ \r\n" + //
-                "| . \\ | | (_| | | | (_) |\r\n" + //
-                "|_|\\_\\/ |\\__,_|_|  \\___/ \r\n" + //
-                "    |__/                 \n";
-
-        System.out.println(LINE + "\n" + logo + LINE + "\n" + "Hello! I'm Kjaro\n"
-                + "What can I do for you?\n" + LINE);
-
+        
+        System.out.println(KjaroFormat.LINE + "\n" + KjaroFormat.LOGO + KjaroFormat.LINE + "\n" + "Hello! I'm Kjaro\n"
+                + "What can I do for you?\n" + KjaroFormat.LINE);
+        loadSaveFile();
         while (isRunning) {
             String message = reader.nextLine().trim();
             if (!message.isEmpty()) {
@@ -33,18 +31,18 @@ public class Kjaro {
 
     // Prints a formatted message, supports multi-line messages
     public static void printMessage(String... messages) {
-        System.out.println(INDENT + LINE);
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.LINE);
         for (int i = 0; i < messages.length; i++) {
-            System.out.println(INDENT + messages[i]);
+            System.out.println(KjaroFormat.INDENT + messages[i]);
         }
-        System.out.println(INDENT + LINE);
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.LINE);
     }
 
     // Prints a single-line formatted error message
     public static void printError(String message) {
-        System.out.println(INDENT + ERR_LINE);
-        System.out.println(INDENT + message);
-        System.out.println(INDENT + ERR_LINE);
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.ERR_LINE);
+        System.out.println(KjaroFormat.INDENT + message);
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.ERR_LINE);
     }
 
     // Adds a new task into the tasks list
@@ -57,12 +55,12 @@ public class Kjaro {
 
     // Prints the list of tasks
     public static void printList() {
-        System.out.println(INDENT + LINE);
-        System.out.println(INDENT + "Here are your task(s)! You have " + tasks.size() + " task(s)!");
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.LINE);
+        System.out.println(KjaroFormat.INDENT + "Here are your task(s)! You have " + tasks.size() + " task(s)!");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(INDENT + (i + 1) + ": " + tasks.get(i));
+            System.out.println(KjaroFormat.INDENT + (i + 1) + ": " + tasks.get(i));
         }
-        System.out.println(INDENT + LINE);
+        System.out.println(KjaroFormat.INDENT + KjaroFormat.LINE);
     }
 
     // Handles closing, when "bye" is entered
@@ -77,6 +75,7 @@ public class Kjaro {
         String[] args = input.split(" ");
         switch (args[0]) {
             case ("bye"):
+            exportData();
             if (input.equals("bye kjaro!")) {
                 exit("Byebye! See you soon! :3");
                 break;
@@ -267,5 +266,60 @@ public class Kjaro {
         } else {
             addToTasks(new Event(eventName.trim(), eventFrom.trim(), eventTo.trim()));
         }
+    }
+
+    private static void loadSaveFile() {
+        try {
+            if (!saveFile.createNewFile()) {
+                Scanner saveFileScanner = new Scanner(saveFile);
+                while (saveFileScanner.hasNext()) {
+                    importData(saveFileScanner.nextLine().split("\\s\\|\\s"));
+                }
+                saveFileScanner.close();
+            }
+        } catch (IOException e) {
+            
+        }
+    }
+
+    private static void importData(String[] fileLine) {
+        switch (fileLine[0].trim()) {
+        case ("T"):
+            ToDo toDo = new ToDo(fileLine[2].trim());
+            if (fileLine[1].trim().equals("X")) {
+                toDo.markAsDone();
+            }
+            tasks.add(toDo);
+            break;
+        case ("D"):
+            Deadline deadline = new Deadline(fileLine[2].trim(), fileLine[3].trim());
+            if (fileLine[1].trim().equals("X")) {
+                deadline.markAsDone();
+            }
+            tasks.add(deadline);
+            break;
+        case ("E"):
+            Event event = new Event(fileLine[2].trim(), fileLine[3].trim(), fileLine[4].trim());
+            if (fileLine[1].trim().equals("X")) {
+                event.markAsDone();
+            }
+            tasks.add(event);
+            break;
+        }
+    }
+
+    private static void exportData() {
+        try {
+            FileWriter fw = new FileWriter(saveFile);
+            String saveData = "";
+            for (Task t : tasks) {
+                saveData += t.toSave() + System.lineSeparator();
+            }
+            fw.write(saveData);
+            fw.close();
+        }
+        catch (IOException e) {
+
+        } 
     }
 }

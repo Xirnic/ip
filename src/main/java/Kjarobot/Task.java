@@ -1,3 +1,5 @@
+package Kjarobot;
+
 public abstract class Task {
     private String taskName;
     private boolean isDone;
@@ -21,6 +23,14 @@ public abstract class Task {
             return "[X] " + this.taskName;
         } else {
             return "[ ] " + this.taskName;
+        }
+    }
+
+    public String toSave() {
+        if (this.isDone) {
+            return " X | " + this.taskName;
+        } else {
+            return " O | " + this.taskName;
         }
     }
 }
