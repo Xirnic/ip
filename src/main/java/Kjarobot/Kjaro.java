@@ -3,6 +3,8 @@ package Kjarobot;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -10,7 +12,6 @@ import java.util.Scanner;
 public class Kjaro {
     private static ArrayList<Task> tasks = new ArrayList<>();
     public static boolean isRunning = true;
-    public static Scanner reader = new Scanner(System.in);
     public static File saveFile = new File("data/KjaroSaveFile.txt");
 
 
@@ -19,6 +20,7 @@ public class Kjaro {
         System.out.println(KjaroFormat.LINE + "\n" + KjaroFormat.LOGO + KjaroFormat.LINE + "\n" + "Hello! I'm Kjaro\n"
                 + "What can I do for you?\n" + KjaroFormat.LINE);
         loadSaveFile();
+        Scanner reader = new Scanner(System.in);
         while (isRunning) {
             String message = reader.nextLine().trim();
             if (!message.isEmpty()) {
@@ -27,6 +29,7 @@ public class Kjaro {
                 printError("There's nothing!");
             }
         }
+        reader.close();
     }
 
     // Prints a formatted message, supports multi-line messages
@@ -66,7 +69,6 @@ public class Kjaro {
     // Handles closing, when "bye" is entered
     public static void exit(String message) {
         printMessage(message);
-        reader.close();
         isRunning = false;
     }
 
@@ -228,7 +230,12 @@ public class Kjaro {
         } else if (deadlineDate.isEmpty()) { 
             printError("Missing due date! (/by)");
         } else {
-            addToTasks(new Deadline(deadlineName.trim(), deadlineDate.trim()));
+            try {
+                LocalDate ldDeadlineDate = LocalDate.parse(deadlineDate.trim());
+                addToTasks(new Deadline(deadlineName.trim(), ldDeadlineDate));
+            } catch (DateTimeParseException e) {
+                printError("Unrecognised date format! try <yyyy-mm-dd>");
+            }
         }
     }
     
@@ -264,7 +271,15 @@ public class Kjaro {
         } else if (eventTo.isEmpty()) {
             printError("Event end date is missing! (/to)");
         } else {
-            addToTasks(new Event(eventName.trim(), eventFrom.trim(), eventTo.trim()));
+            try {
+                LocalDate ldEventFrom = LocalDate.parse(eventFrom.trim());
+                LocalDate ldEventTo = LocalDate.parse(eventTo.trim());
+                addToTasks(new Event(eventName.trim(), ldEventFrom, ldEventTo));
+                
+            } catch (DateTimeParseException e) {
+                printError("Unrecognised date format! try <yyyy-mm-dd>");
+            }
+            
         }
     }
 
@@ -292,14 +307,16 @@ public class Kjaro {
             tasks.add(toDo);
             break;
         case ("D"):
-            Deadline deadline = new Deadline(fileLine[2].trim(), fileLine[3].trim());
+            Deadline deadline = new Deadline(fileLine[2].trim(), LocalDate.parse(fileLine[3].trim()));
             if (fileLine[1].trim().equals("X")) {
                 deadline.markAsDone();
             }
             tasks.add(deadline);
             break;
         case ("E"):
-            Event event = new Event(fileLine[2].trim(), fileLine[3].trim(), fileLine[4].trim());
+            Event event = new Event(fileLine[2].trim(),
+                     LocalDate.parse(fileLine[3].trim()), 
+                     LocalDate.parse(fileLine[4].trim()));
             if (fileLine[1].trim().equals("X")) {
                 event.markAsDone();
             }
