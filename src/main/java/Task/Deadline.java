@@ -1,4 +1,4 @@
-package Kjarobot;
+package Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +19,8 @@ public class Deadline extends Task {
 
     @Override
     public String toSave() {
-        return "D |" + super.toSave() 
-                + " | " + dueDate;
+        return "D/" + super.toSave() 
+                + "/" + dueDate;
     }
     
 }

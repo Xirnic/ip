@@ -1,4 +1,4 @@
-package Kjarobot;
+package Task;
 
 public class ToDo extends Task {
     
@@ -13,6 +13,6 @@ public class ToDo extends Task {
 
     @Override
     public String toSave() {
-        return "T |" + super.toSave();
+        return "T/" + super.toSave();
     }
 }

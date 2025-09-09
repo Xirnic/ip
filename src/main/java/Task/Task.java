@@ -1,4 +1,4 @@
-package Kjarobot;
+package Task;
 
 public abstract class Task {
     private String taskName;
@@ -9,12 +9,14 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public void markAsDone() {
+    public Task markAsDone() {
         this.isDone = true;
+        return this;
     }
 
-    public void markAsUndone() {
+    public Task markAsUndone() {
         this.isDone = false;
+        return this;
     }
 
     @Override
@@ -28,9 +30,13 @@ public abstract class Task {
 
     public String toSave() {
         if (this.isDone) {
-            return " X | " + this.taskName;
+            return "X/" + this.taskName;
         } else {
-            return " O | " + this.taskName;
+            return "O/" + this.taskName;
         }
+    }
+
+    public static String getErrMessage() {
+        return "Unimplemented!";
     }
 }

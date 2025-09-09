@@ -1,4 +1,4 @@
-package Kjarobot;
+package Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,8 +22,8 @@ public class Event extends Task {
 
     @Override
     public String toSave() {
-        return "E |" + super.toSave()
-                + " | " + fromDate
-                + " | " + toDate;
+        return "E/" + super.toSave()
+                + "/" + fromDate
+                + "/" + toDate;
     }
 }
