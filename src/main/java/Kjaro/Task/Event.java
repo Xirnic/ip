@@ -3,10 +3,19 @@ package Kjaro.Task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * An event is a task with from and to dates.
+ */
 public class Event extends Task {
     private LocalDate fromDate;
     private LocalDate toDate;
 
+    /**
+     * The constructor for an Event.
+     * @param taskName the name of the event.
+     * @param fromDate the start date (from) of the event.
+     * @param toDate the end date (to) of the event.
+     */
     public Event(String taskName, LocalDate fromDate, LocalDate toDate) {
         super(taskName);
         this.fromDate = fromDate;

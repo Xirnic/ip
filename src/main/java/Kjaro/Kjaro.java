@@ -14,6 +14,9 @@ public class Kjaro {
     private Parser parser;
     private Storage storage;
 
+    /**
+     * Kjaro, a chatbot that manages a task list, supporting addition, deletion, saving, as well as 3 types of tasks that can be marked as done and undone.
+     */
     public Kjaro() {
         ui = new UI();
         storage = new Storage(ui);
@@ -23,7 +26,6 @@ public class Kjaro {
     public static void main(String[] args) {
         Kjaro kjaro = new Kjaro();
         kjaro.run();
-        
     }
 
     private void run() {

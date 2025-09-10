@@ -6,15 +6,25 @@ public class TaskList {
 
     private ArrayList<Task> tasks;
 
+    /**
+     * Constructor for an empty list
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Constructor for an existing list
+     * @param tasks
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
-    // Adds the task to the list, and returns the new total tasks
+    /**
+     * Adds a task to the list.
+     * @param task the task to be added.
+     */
     public void addToTasks(Task task) {
         tasks.add(task);
     }
