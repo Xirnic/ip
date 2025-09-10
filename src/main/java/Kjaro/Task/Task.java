@@ -9,15 +9,17 @@ public abstract class Task {
 
     /**
      * The constructor for a task. By default, it is marked as undone.
+     * 
      * @param taskName the name of the task.
      */
     public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
     }
-    
+
     /**
      * Marks a task as done
+     * 
      * @return the marked task
      */
     public Task markAsDone() {
@@ -27,6 +29,7 @@ public abstract class Task {
 
     /**
      * Marks a task as undone
+     * 
      * @return the marked task
      */
     public Task markAsUndone() {
@@ -45,6 +48,7 @@ public abstract class Task {
 
     /**
      * Formats the task into the save file format
+     * 
      * @return the formatted string to save
      */
     public String toSave() {

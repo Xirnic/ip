@@ -15,6 +15,7 @@ public class TaskList {
 
     /**
      * Constructor for an existing list
+     * 
      * @param tasks
      */
     public TaskList(ArrayList<Task> tasks) {
@@ -23,6 +24,7 @@ public class TaskList {
 
     /**
      * Adds a task to the list.
+     * 
      * @param task the task to be added.
      */
     public void addToTasks(Task task) {
@@ -36,7 +38,7 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
-    
+
     public Task markTaskDone(int taskNumber) {
         return tasks.get(taskNumber).markAsDone();
     }

@@ -5,9 +5,10 @@ package Kjaro.Task;
  */
 
 public class ToDo extends Task {
-    
+
     /**
      * Constructor for a ToDo
+     * 
      * @param taskName the name of the ToDo
      */
     public ToDo(String taskName) {

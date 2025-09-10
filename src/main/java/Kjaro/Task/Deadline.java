@@ -12,6 +12,7 @@ public class Deadline extends Task {
 
     /**
      * The constructor for a deadline.
+     * 
      * @param taskName the name of the deadline
      * @param dueDate the date at which the deadline is due
      */
@@ -22,14 +23,12 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() 
-                + " (by: " + dueDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
+        return "[D]" + super.toString() + " (by: " + dueDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
     }
 
     @Override
     public String toSave() {
-        return "D/" + super.toSave() 
-                + "/" + dueDate;
+        return "D/" + super.toSave() + "/" + dueDate;
     }
-    
+
 }

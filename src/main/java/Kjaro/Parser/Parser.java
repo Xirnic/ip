@@ -31,12 +31,12 @@ public class Parser {
 
     /**
      * Parses the user input, converting it to functions supported by Kjaro.
+     * 
      * @param input the user input.
      * @return boolea, whether Kjaro should keep running.
      */
     public boolean parseInput(String input) {
-        final Pattern commandPattern = Pattern.compile("(?<commandWord>\\S+)"
-            + "(?<arguments>.*)");
+        final Pattern commandPattern = Pattern.compile("(?<commandWord>\\S+)" + "(?<arguments>.*)");
         final Matcher matcher = commandPattern.matcher(input.trim());
         if (!matcher.matches()) {
             ui.printError(Messages.COMMAND_ERROR);
@@ -74,6 +74,7 @@ public class Parser {
         }
         return true;
     }
+
     /**
      * Displays the full list of tasks using the UI class.
      */
@@ -95,7 +96,9 @@ public class Parser {
     }
 
     /**
-     * Attempt to add a todo to the tasklist, printing an error if there are unexpected arguments.
+     * Attempt to add a todo to the tasklist, printing an error if there are
+     * unexpected arguments.
+     * 
      * @param arguments the arguments in the user's input.
      */
     private void tryToDo(String arguments) {
@@ -108,14 +111,13 @@ public class Parser {
     }
 
     /**
-     * Attempts to add a deadline to the tasklist, printing an error if there are unexpected arguments.
+     * Attempts to add a deadline to the tasklist, printing an error if there
+     * are unexpected arguments.
+     * 
      * @param arguments the arguments in the user's input.
      */
     private void tryDeadline(String arguments) {
-        final Pattern deadlinePattern = 
-                Pattern.compile("(?<deadlineName>[^/]+)" 
-                + "\\/by" 
-                + "(?<deadlineBy>[^/]+)");
+        final Pattern deadlinePattern = Pattern.compile("(?<deadlineName>[^/]+)" + "\\/by" + "(?<deadlineBy>[^/]+)");
         final Matcher matcher = deadlinePattern.matcher(arguments.trim());
         if (!matcher.matches()) {
             ui.printError(Messages.DEADLINE_ERROR);
@@ -134,16 +136,14 @@ public class Parser {
     }
 
     /**
-     * Attempts to add a event to the tasklist, printing an error if there are unexpected arguments.
+     * Attempts to add a event to the tasklist, printing an error if there are
+     * unexpected arguments.
+     * 
      * @param arguments the arguments in the user's input.
      */
     private void tryEvent(String arguments) {
-        final Pattern eventPattern = 
-                Pattern.compile("(?<eventName>[^/]+)"
-                + "\\/from" 
-                + "(?<eventFrom>[^/]+)"
-                + "\\/to"
-                + "(?<eventTo>[^/]+)");
+        final Pattern eventPattern = Pattern.compile("(?<eventName>[^/]+)" + "\\/from" + "(?<eventFrom>[^/]+)" + "\\/to"
+                                        + "(?<eventTo>[^/]+)");
         final Matcher matcher = eventPattern.matcher(arguments.trim());
         if (!matcher.matches()) {
             ui.printError(Messages.EVENT_ERROR);
@@ -165,7 +165,9 @@ public class Parser {
     }
 
     /**
-     * Attempts to mark a task as done, printing an error if the argument isn't a number or is out of bounds.
+     * Attempts to mark a task as done, printing an error if the argument isn't
+     * a number or is out of bounds.
+     * 
      * @param arguments the arguments in the user's inputs.
      */
     private void tryMark(String arguments) {
@@ -185,7 +187,9 @@ public class Parser {
     }
 
     /**
-     * Attempts to mark a task as undone, printing an error if the argument isn't a number or is out of bounds.
+     * Attempts to mark a task as undone, printing an error if the argument
+     * isn't a number or is out of bounds.
+     * 
      * @param arguments the arguments in the user's inputs.
      */
     private void tryUnmark(String arguments) {
@@ -205,7 +209,9 @@ public class Parser {
     }
 
     /**
-     * Attempts to delete a task, printing an error if the argument isn't a number or is out of bounds.
+     * Attempts to delete a task, printing an error if the argument isn't a
+     * number or is out of bounds.
+     * 
      * @param arguments the arguments in the user's inputs.
      */
     private void tryDelete(String arguments) {

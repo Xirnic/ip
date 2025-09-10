@@ -12,6 +12,7 @@ public class Event extends Task {
 
     /**
      * The constructor for an Event.
+     * 
      * @param taskName the name of the event.
      * @param fromDate the start date (from) of the event.
      * @param toDate the end date (to) of the event.
@@ -24,15 +25,12 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString()
-                + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
-                + " to: " + toDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
+        return "[E]" + super.toString() + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+                                        + " to: " + toDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
     }
 
     @Override
     public String toSave() {
-        return "E/" + super.toSave()
-                + "/" + fromDate
-                + "/" + toDate;
+        return "E/" + super.toSave() + "/" + fromDate + "/" + toDate;
     }
 }

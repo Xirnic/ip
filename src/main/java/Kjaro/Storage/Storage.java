@@ -19,7 +19,8 @@ import Kjaro.UI.Messages;
 import Kjaro.UI.UI;
 
 /**
- * The storage class, managing writing and reading from a predetermined save file format.
+ * The storage class, managing writing and reading from a predetermined save
+ * file format.
  */
 public class Storage {
 
@@ -32,14 +33,17 @@ public class Storage {
 
     /**
      * The constructor for Storage.
+     * 
      * @param ui for error printing.
      */
     public Storage(UI ui) {
         this.ui = ui;
         this.saveFile = new File(SAVE_PATHNAME);
     }
+
     /**
      * Reads the associated save file, and creates a new file if one isn't found
+     * 
      * @return TaskList with loaded tasks.
      */
     public TaskList loadSaveFile() {
@@ -60,19 +64,20 @@ public class Storage {
         }
         return taskList;
     }
+
     /**
-     * Reads a single line of the save file, adding the task to the list if successful.
+     * Reads a single line of the save file, adding the task to the list if
+     * successful.
+     * 
      * @param line the line of the save file to be read.
      * @param taskList the TaskList for the task to be added to.
-     * @return returns a successful string if successful, the erroneous line if unsuccessful.
+     * @return returns a successful string if successful, the erroneous line if
+     * unsuccessful.
      */
     private String readSaveData(String line, TaskList taskList) {
-        final Pattern savePattern = 
-                Pattern.compile("(?<taskType>[TDE])" + "\\/"
-                    + "(?<isDone>[XO])" + "\\/"
-                    + "(?<taskName>[^/]+)" + "(?:\\/)?"
-                    + "(?<firstDate>[^/]+)?" + "(?:\\/)?"
-                    + "(?<secondDate>[^/]+)?");
+        final Pattern savePattern = Pattern.compile("(?<taskType>[TDE])" + "\\/" + "(?<isDone>[XO])" + "\\/"
+                                        + "(?<taskName>[^/]+)" + "(?:\\/)?" + "(?<firstDate>[^/]+)?" + "(?:\\/)?"
+                                        + "(?<secondDate>[^/]+)?");
         final Matcher matcher = savePattern.matcher(line);
         if (!matcher.matches()) {
             return logSaveError(line);
@@ -88,13 +93,13 @@ public class Storage {
             case ("T"):
                 addedTask = new ToDo(taskName);
                 break;
-            case ("D"): 
+            case ("D"):
                 if (firstDate != null) {
                     LocalDate deadlineBy = LocalDate.parse(firstDate);
                     addedTask = new Deadline(taskName, deadlineBy);
                     break;
                 } else {
-                    return logSaveError(line);                    
+                    return logSaveError(line);
                 }
             case ("E"):
                 if (firstDate != null && secondDate != null) {
@@ -106,7 +111,7 @@ public class Storage {
                     return logSaveError(line);
                 }
             default:
-                return logSaveError(line);                
+                return logSaveError(line);
             }
             if (isDone) {
                 addedTask.markAsDone();
@@ -114,35 +119,35 @@ public class Storage {
             taskList.addToTasks(addedTask);
             return SUCCESSFUL_STRING;
         } catch (DateTimeParseException e) {
-           return logSaveError(line);
+            return logSaveError(line);
         }
     }
 
     /**
      * Currently returns the erroneous line without formatting.
+     * 
      * @param line the erroneous line in the save file.
      * @return the erroneous line in the save file.
      */
     private String logSaveError(String line) {
         /*
-        isFullyLoaded = false;
-        final Pattern savePatternLenient = 
-                Pattern.compile("(?<taskType>.)?" + "(?:\\/)?"
-                    + "(?<isDone>.)?" + "(?:\\/)?"
-                    + "(?<taskName>[^/]+)?" + "(?:\\/)?"
-                    + "(?<firstDate>[^/]+)?"  + "(?:\\/)?"
-                    + "(?<secondDate>[^/]+)?");
-        final Matcher matcher = savePatternLenient.matcher(line);
-        ui.printError(line);
-        */
+         * isFullyLoaded = false; final Pattern savePatternLenient =
+         * Pattern.compile("(?<taskType>.)?" + "(?:\\/)?" + "(?<isDone>.)?" +
+         * "(?:\\/)?" + "(?<taskName>[^/]+)?" + "(?:\\/)?" +
+         * "(?<firstDate>[^/]+)?" + "(?:\\/)?" + "(?<secondDate>[^/]+)?"); final
+         * Matcher matcher = savePatternLenient.matcher(line);
+         * ui.printError(line);
+         */
         return line;
     }
 
     public ArrayList<String> getErrors() {
         return errors;
     }
+
     /**
      * Converts a tasklist into its save format and writes it in the save file.
+     * 
      * @param taskList the tasklist to be saved
      */
     public void writeSaveData(TaskList taskList) {
@@ -154,9 +159,8 @@ public class Storage {
             }
             fw.write(saveData);
             fw.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ui.printError(Messages.FILE_ERROR);
-        } 
+        }
     }
 }
