@@ -14,6 +14,9 @@ import Kjaro.Task.ToDo;
 import Kjaro.UI.Messages;
 import Kjaro.UI.UI;
 
+/**
+ * A simple parser for the commands supported by Kjaro.
+ */
 public class Parser {
 
     protected TaskList taskList;
@@ -26,6 +29,11 @@ public class Parser {
         this.storage = storage;
     }
 
+    /**
+     * Parses the user input, converting it to functions supported by Kjaro.
+     * @param input the user input.
+     * @return boolea, whether Kjaro should keep running.
+     */
     public boolean parseInput(String input) {
         final Pattern commandPattern = Pattern.compile("(?<commandWord>\\S+)"
             + "(?<arguments>.*)");
@@ -66,7 +74,9 @@ public class Parser {
         }
         return true;
     }
-
+    /**
+     * Displays the full list of tasks using the UI class.
+     */
     private void displayList() {
         String initialMessage = Messages.TASKLIST_MESSAGE.apply(taskList.getCount()) + "\n";
         String[] taskListDisplay = taskList.getTasks().stream().map(x -> x.toString()).toArray(String[]::new);
@@ -76,20 +86,31 @@ public class Parser {
         ui.printMessage(fullMessage);
     }
 
+    /**
+     * Prints the goodbye message, before saving the current data.
+     */
     private void exit() {
         ui.printMessage(Messages.GOODBYE_MESSAGE);
         storage.writeSaveData(taskList);
     }
 
+    /**
+     * Attempt to add a todo to the tasklist, printing an error if there are unexpected arguments.
+     * @param arguments the arguments in the user's input.
+     */
     private void tryToDo(String arguments) {
         if (arguments.contains("/")) {
             ui.printError(Messages.TODO_ERROR);
         }
-        ToDo toDo = new ToDo(arguments.trim());
+        ToDo toDo = new ToDo(arguments);
         taskList.addToTasks(toDo);
         ui.printMessage(Messages.TASK_ADDED_MESSAGE, toDo.toString());
     }
 
+    /**
+     * Attempts to add a deadline to the tasklist, printing an error if there are unexpected arguments.
+     * @param arguments the arguments in the user's input.
+     */
     private void tryDeadline(String arguments) {
         final Pattern deadlinePattern = 
                 Pattern.compile("(?<deadlineName>[^/]+)" 
@@ -112,6 +133,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Attempts to add a event to the tasklist, printing an error if there are unexpected arguments.
+     * @param arguments the arguments in the user's input.
+     */
     private void tryEvent(String arguments) {
         final Pattern eventPattern = 
                 Pattern.compile("(?<eventName>[^/]+)"
@@ -139,6 +164,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Attempts to mark a task as done, printing an error if the argument isn't a number or is out of bounds.
+     * @param arguments the arguments in the user's inputs.
+     */
     private void tryMark(String arguments) {
         final Pattern markPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
         final Matcher matcher = markPattern.matcher(arguments);
@@ -155,6 +184,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Attempts to mark a task as undone, printing an error if the argument isn't a number or is out of bounds.
+     * @param arguments the arguments in the user's inputs.
+     */
     private void tryUnmark(String arguments) {
         final Pattern unmarkPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
         final Matcher matcher = unmarkPattern.matcher(arguments);
@@ -171,6 +204,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Attempts to delete a task, printing an error if the argument isn't a number or is out of bounds.
+     * @param arguments the arguments in the user's inputs.
+     */
     private void tryDelete(String arguments) {
         final Pattern deletePattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
         final Matcher matcher = deletePattern.matcher(arguments);

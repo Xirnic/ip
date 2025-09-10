@@ -3,9 +3,18 @@ package Kjaro.Task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A Deadline is a task with a due date
+ */
 public class Deadline extends Task {
+
     private LocalDate dueDate;
 
+    /**
+     * The constructor for a deadline.
+     * @param taskName the name of the deadline
+     * @param dueDate the date at which the deadline is due
+     */
     public Deadline(String taskName, LocalDate dueDate) {
         super(taskName);
         this.dueDate = dueDate;
