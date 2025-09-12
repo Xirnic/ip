@@ -52,4 +52,10 @@ public class TaskList {
         tasks.remove(taskNumber);
         return removedTask;
     }
+
+    public TaskList filterList(String keyword) {
+        TaskList filtered = new TaskList();
+        tasks.stream().filter(x -> x.getName().contains(keyword)).forEach(x -> filtered.addToTasks(x));
+        return filtered;
+    }
 }
