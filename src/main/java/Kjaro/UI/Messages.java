@@ -21,4 +21,5 @@ public class Messages {
     public static final Function<Integer, String> UNMARK_MESSAGE = x -> "I've marked task " + x + "as undone, you'll get it next time.";
     public static final Function<Integer, String> DELETE_MESSAGE = x -> "Alright, I've deleted task " + x + ".";
     public static final String GOODBYE_MESSAGE = "That's all? See you soon!";
+    public static final String FILTERED_LIST_MESSAGE = "Here are the matching tasks in your list:";
 }

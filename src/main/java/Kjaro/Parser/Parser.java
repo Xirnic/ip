@@ -46,7 +46,10 @@ public class Parser {
 
         switch (commandWord) {
         case ("list"):
-            displayList();
+            displayList(Messages.TASKLIST_MESSAGE.apply(taskList.getCount()), taskList);
+            break;
+        case ("find"):
+            filterList(arguments);
             break;
         case ("bye"):
             exit();
@@ -77,8 +80,7 @@ public class Parser {
     /**
      * Displays the full list of tasks using the UI class.
      */
-    private void displayList() {
-        String initialMessage = Messages.TASKLIST_MESSAGE.apply(taskList.getCount()) + "\n";
+    private void displayList(String initialMessage, TaskList taskList) {
         String[] taskListDisplay = taskList.getTasks().stream().map(x -> x.toString()).toArray(String[]::new);
         String[] fullMessage = new String[1 + taskListDisplay.length];
         fullMessage[0] = initialMessage;
@@ -222,5 +224,9 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             ui.printError(Messages.TASK_OOB_ERROR);
         }
+    }
+
+    private void filterList(String arguments) {
+        displayList(Messages.FILTERED_LIST_MESSAGE,taskList.filterList(arguments));
     }
 }

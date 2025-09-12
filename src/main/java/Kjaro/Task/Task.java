@@ -15,6 +15,10 @@ public abstract class Task {
         this.taskName = taskName;
         this.isDone = false;
     }
+
+    public String getName() {
+        return taskName;
+    }
     
     /**
      * Marks a task as done
