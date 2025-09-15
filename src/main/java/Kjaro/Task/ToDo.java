@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 /**
  * A todo is the simplest task, with no additional features
@@ -8,7 +8,7 @@ public class ToDo extends Task {
 
     /**
      * Constructor for a ToDo
-     * 
+     *
      * @param taskName the name of the ToDo
      */
     public ToDo(String taskName) {

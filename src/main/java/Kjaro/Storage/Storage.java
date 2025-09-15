@@ -1,4 +1,4 @@
-package Kjaro.Storage;
+package kjaro.storage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,13 +10,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Kjaro.Task.Deadline;
-import Kjaro.Task.Event;
-import Kjaro.Task.Task;
-import Kjaro.Task.TaskList;
-import Kjaro.Task.ToDo;
-import Kjaro.UI.Messages;
-import Kjaro.UI.UI;
+import kjaro.task.Deadline;
+import kjaro.task.Event;
+import kjaro.task.Task;
+import kjaro.task.TaskList;
+import kjaro.task.ToDo;
+import kjaro.ui.Messages;
+import kjaro.ui.UI;
 
 /**
  * The storage class, managing writing and reading from a predetermined save
@@ -33,7 +33,7 @@ public class Storage {
 
     /**
      * The constructor for Storage.
-     * 
+     *
      * @param ui for error printing.
      */
     public Storage(UI ui) {
@@ -43,7 +43,7 @@ public class Storage {
 
     /**
      * Reads the associated save file, and creates a new file if one isn't found
-     * 
+     *
      * @return TaskList with loaded tasks.
      */
     public TaskList loadSaveFile() {
@@ -68,11 +68,10 @@ public class Storage {
     /**
      * Reads a single line of the save file, adding the task to the list if
      * successful.
-     * 
+     *
      * @param line the line of the save file to be read.
      * @param taskList the TaskList for the task to be added to.
-     * @return returns a successful string if successful, the erroneous line if
-     * unsuccessful.
+     * @return returns a successful string or the error log
      */
     private String readSaveData(String line, TaskList taskList) {
         final Pattern savePattern = Pattern.compile("(?<taskType>[TDE])" + "\\/" + "(?<isDone>[XO])" + "\\/"
@@ -125,7 +124,7 @@ public class Storage {
 
     /**
      * Currently returns the erroneous line without formatting.
-     * 
+     *
      * @param line the erroneous line in the save file.
      * @return the erroneous line in the save file.
      */
@@ -147,7 +146,7 @@ public class Storage {
 
     /**
      * Converts a tasklist into its save format and writes it in the save file.
-     * 
+     *
      * @param taskList the tasklist to be saved
      */
     public void writeSaveData(TaskList taskList) {

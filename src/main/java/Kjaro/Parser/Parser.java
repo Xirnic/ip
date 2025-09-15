@@ -1,18 +1,18 @@
-package Kjaro.Parser;
+package kjaro.parser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Kjaro.Storage.Storage;
-import Kjaro.Task.Deadline;
-import Kjaro.Task.Event;
-import Kjaro.Task.Task;
-import Kjaro.Task.TaskList;
-import Kjaro.Task.ToDo;
-import Kjaro.UI.Messages;
-import Kjaro.UI.UI;
+import kjaro.storage.Storage;
+import kjaro.task.Deadline;
+import kjaro.task.Event;
+import kjaro.task.Task;
+import kjaro.task.TaskList;
+import kjaro.task.ToDo;
+import kjaro.ui.Messages;
+import kjaro.ui.UI;
 
 /**
  * A simple parser for the commands supported by Kjaro.
@@ -23,6 +23,14 @@ public class Parser {
     protected UI ui;
     protected Storage storage;
 
+    /**
+     * Instantiates a parser with the tasklist, ui, and storage for task
+     * management
+     *
+     * @param taskList tasklist for task management
+     * @param ui ui for printing messages
+     * @param storage storage for saving data
+     */
     public Parser(TaskList taskList, UI ui, Storage storage) {
         this.taskList = taskList;
         this.ui = ui;
@@ -31,7 +39,7 @@ public class Parser {
 
     /**
      * Parses the user input, converting it to functions supported by Kjaro.
-     * 
+     *
      * @param input the user input.
      * @return boolea, whether Kjaro should keep running.
      */
@@ -100,7 +108,7 @@ public class Parser {
     /**
      * Attempt to add a todo to the tasklist, printing an error if there are
      * unexpected arguments.
-     * 
+     *
      * @param arguments the arguments in the user's input.
      */
     private void tryToDo(String arguments) {
@@ -115,7 +123,7 @@ public class Parser {
     /**
      * Attempts to add a deadline to the tasklist, printing an error if there
      * are unexpected arguments.
-     * 
+     *
      * @param arguments the arguments in the user's input.
      */
     private void tryDeadline(String arguments) {
@@ -140,7 +148,7 @@ public class Parser {
     /**
      * Attempts to add a event to the tasklist, printing an error if there are
      * unexpected arguments.
-     * 
+     *
      * @param arguments the arguments in the user's input.
      */
     private void tryEvent(String arguments) {
@@ -169,7 +177,7 @@ public class Parser {
     /**
      * Attempts to mark a task as done, printing an error if the argument isn't
      * a number or is out of bounds.
-     * 
+     *
      * @param arguments the arguments in the user's inputs.
      */
     private void tryMark(String arguments) {
@@ -191,7 +199,7 @@ public class Parser {
     /**
      * Attempts to mark a task as undone, printing an error if the argument
      * isn't a number or is out of bounds.
-     * 
+     *
      * @param arguments the arguments in the user's inputs.
      */
     private void tryUnmark(String arguments) {
@@ -213,7 +221,7 @@ public class Parser {
     /**
      * Attempts to delete a task, printing an error if the argument isn't a
      * number or is out of bounds.
-     * 
+     *
      * @param arguments the arguments in the user's inputs.
      */
     private void tryDelete(String arguments) {
@@ -233,6 +241,6 @@ public class Parser {
     }
 
     private void filterList(String arguments) {
-        displayList(Messages.FILTERED_LIST_MESSAGE,taskList.filterList(arguments));
+        displayList(Messages.FILTERED_LIST_MESSAGE, taskList.filterList(arguments));
     }
 }

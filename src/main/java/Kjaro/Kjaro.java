@@ -1,12 +1,16 @@
-package Kjaro;
+package kjaro;
 
 import java.util.Scanner;
 
-import Kjaro.Parser.Parser;
-import Kjaro.Storage.Storage;
-import Kjaro.Task.TaskList;
-import Kjaro.UI.UI;
+import kjaro.parser.Parser;
+import kjaro.storage.Storage;
+import kjaro.task.TaskList;
+import kjaro.ui.UI;
 
+/**
+ * Kjaro encapsulates the chatbot's tasklist, parser and storage for task
+ * management
+ */
 public class Kjaro {
 
     private UI ui;
@@ -41,5 +45,4 @@ public class Kjaro {
         }
         reader.close();
     }
-
 }

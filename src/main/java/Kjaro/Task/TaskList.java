@@ -1,7 +1,12 @@
-package Kjaro.Task;
+package kjaro.task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the list of tasks that the user will interact with This class
+ * encapsulates the list, and provides methods for adding, deleting, and
+ * marking.
+ */
 public class TaskList {
 
     private ArrayList<Task> tasks;
@@ -15,7 +20,7 @@ public class TaskList {
 
     /**
      * Constructor for an existing list
-     * 
+     *
      * @param tasks
      */
     public TaskList(ArrayList<Task> tasks) {
@@ -24,7 +29,7 @@ public class TaskList {
 
     /**
      * Adds a task to the list.
-     * 
+     *
      * @param task the task to be added.
      */
     public void addToTasks(Task task) {
@@ -47,12 +52,24 @@ public class TaskList {
         return tasks.get(taskNumber).markAsUndone();
     }
 
+    /**
+     * Deletes a task from the list
+     *
+     * @param taskNumber the tasknumber for the task
+     * @return the deleted task
+     */
     public Task deleteTask(int taskNumber) {
         Task removedTask = tasks.get(taskNumber);
         tasks.remove(taskNumber);
         return removedTask;
     }
 
+    /**
+     * Returns a filtered list of tasks matching the keyword
+     *
+     * @param keyword keyword to be matched
+     * @return filtered list of tasks
+     */
     public TaskList filterList(String keyword) {
         TaskList filtered = new TaskList();
         tasks.stream().filter(x -> x.getName().contains(keyword)).forEach(x -> filtered.addToTasks(x));

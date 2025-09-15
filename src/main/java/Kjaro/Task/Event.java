@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ public class Event extends Task {
 
     /**
      * The constructor for an Event.
-     * 
+     *
      * @param taskName the name of the event.
      * @param fromDate the start date (from) of the event.
      * @param toDate the end date (to) of the event.

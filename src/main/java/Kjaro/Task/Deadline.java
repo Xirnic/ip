@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ public class Deadline extends Task {
 
     /**
      * The constructor for a deadline.
-     * 
+     *
      * @param taskName the name of the deadline
      * @param dueDate the date at which the deadline is due
      */
