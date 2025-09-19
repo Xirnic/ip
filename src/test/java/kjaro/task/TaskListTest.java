@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 import org.junit.jupiter.api.Test;
 

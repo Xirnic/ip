@@ -1,4 +1,4 @@
-package Kjaro.UI;
+package kjaro.ui;
 
 public class Format {
     public final static String LINE = "________________________________";
