@@ -104,7 +104,7 @@ public class Parser {
      * @param arguments the arguments in the user's input.
      */
     private String tryToDo(String arguments) {
-        if (arguments.contains("/")) {
+        if (arguments.contains("/") && arguments != "") {
             ui.printError(Messages.TODO_ERROR);
         }
         ToDo toDo = new ToDo(arguments);
@@ -126,6 +126,7 @@ public class Parser {
         }
         String deadlineName = matcher.group("deadlineName").trim();
         String deadlineBy = matcher.group("deadlineBy").trim();
+        assert deadlineName != null && deadlineBy != null : "Deadline null";
         try {
             LocalDate ldDeadlineBy = LocalDate.parse(deadlineBy);
             Deadline deadline = new Deadline(deadlineName, ldDeadlineBy);
@@ -152,6 +153,7 @@ public class Parser {
         String eventName = matcher.group("eventName").trim();
         String eventFrom = matcher.group("eventFrom").trim();
         String eventTo = matcher.group("eventTo").trim();
+        assert eventName != null && eventFrom != null && eventTo != null : "Event null";
         try {
             LocalDate ldEventFrom = LocalDate.parse(eventFrom);
             LocalDate ldEventTo = LocalDate.parse(eventTo);
