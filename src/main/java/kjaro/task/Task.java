@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 /**
  * Base class for the various types of tasks

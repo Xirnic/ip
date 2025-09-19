@@ -1,4 +1,4 @@
-package Kjaro.Task;
+package kjaro.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

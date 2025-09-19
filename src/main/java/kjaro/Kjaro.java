@@ -1,11 +1,12 @@
-package Kjaro;
+package kjaro;
 
 import java.util.Scanner;
 
-import Kjaro.Parser.Parser;
-import Kjaro.Storage.Storage;
-import Kjaro.Task.TaskList;
-import Kjaro.UI.UI;
+import kjaro.parser.Parser;
+import kjaro.storage.Storage;
+import kjaro.task.TaskList;
+import kjaro.ui.Messages;
+import kjaro.ui.UI;
 
 public class Kjaro {
 
@@ -37,9 +38,19 @@ public class Kjaro {
         boolean isRunning = true;
         while (isRunning) {
             String message = reader.nextLine().trim();
-            isRunning = parser.parseInput(message);
+            isRunning = parser.parseInput(message) != ui.printMessage(Messages.GOODBYE_MESSAGE);
         }
         reader.close();
     }
 
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return parser.parseInput(input);
+    }
+
+    public String getWelcome() {
+        return ui.printWelcome();
+    }
 }

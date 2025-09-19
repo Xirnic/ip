@@ -1,4 +1,4 @@
-package Kjaro.Storage;
+package kjaro.storage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,13 +10,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Kjaro.Task.Deadline;
-import Kjaro.Task.Event;
-import Kjaro.Task.Task;
-import Kjaro.Task.TaskList;
-import Kjaro.Task.ToDo;
-import Kjaro.UI.Messages;
-import Kjaro.UI.UI;
+import kjaro.task.Deadline;
+import kjaro.task.Event;
+import kjaro.task.Task;
+import kjaro.task.TaskList;
+import kjaro.task.ToDo;
+import kjaro.ui.Messages;
+import kjaro.ui.UI;
 
 /**
  * The storage class, managing writing and reading from a predetermined save
