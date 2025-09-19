@@ -47,10 +47,10 @@ public class Kjaro {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        return parser.parseInput(input);
+        return parser.parseInput(input) + "\n";
     }
 
     public String getWelcome() {
-        return ui.printWelcome();
+        return ui.printWelcome() + "\n";
     }
 }
