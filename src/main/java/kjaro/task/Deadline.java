@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * A Deadline is a task with a due date
  */
-public class Deadline extends Task {
+public class Deadline extends Task implements Snoozeable {
 
     private LocalDate dueDate;
 
@@ -19,6 +19,11 @@ public class Deadline extends Task {
     public Deadline(String taskName, LocalDate dueDate) {
         super(taskName);
         this.dueDate = dueDate;
+    }
+
+    @Override
+    public void snooze(int days) {
+        this.dueDate = this.dueDate.plusDays(days);
     }
 
     @Override
