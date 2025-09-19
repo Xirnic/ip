@@ -6,11 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kjaro.storage.Storage;
-import kjaro.task.Deadline;
-import kjaro.task.Event;
-import kjaro.task.Task;
-import kjaro.task.TaskList;
-import kjaro.task.ToDo;
+import kjaro.task.*;
 import kjaro.ui.Messages;
 import kjaro.ui.UI;
 
@@ -65,6 +61,8 @@ public class Parser {
             return tryUnmark(arguments);
         case ("delete"):
             return tryDelete(arguments);
+        case ("snooze"):
+            return trySnooze(arguments);
         default:
             return ui.printError(Messages.COMMAND_ERROR);
         }
@@ -76,7 +74,7 @@ public class Parser {
     private String displayList(String initialMessage, TaskList taskList) {
         String[] taskListDisplay = taskList.getTasks().stream().map(x -> x.toString()).toArray(String[]::new);
         for (int i = 0; i < taskListDisplay.length; i++) {
-            taskListDisplay[i] = (i + 1) + taskListDisplay[i];
+            taskListDisplay[i] = (i + 1) + ": " + taskListDisplay[i];
         }
         String[] fullMessage = new String[1 + taskListDisplay.length];
         fullMessage[0] = initialMessage;
@@ -231,5 +229,23 @@ public class Parser {
 
     private String filterList(String arguments) {
         return displayList(Messages.FILTERED_LIST_MESSAGE,taskList.filterList(arguments));
+    }
+
+    private String trySnooze(String arguments) {
+        final Pattern snoozePattern = Pattern.compile("(?<taskNumber>\\d+)" + "\\s*/for\\s*" + "(?<days>\\d+)");
+        final Matcher matcher = snoozePattern.matcher(arguments);
+        if (!matcher.matches()) {
+            return ui.printError(Messages.SNOOZE_ERROR);
+        }
+        int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
+        int snoozeDays = Integer.valueOf(matcher.group("days"));
+        Task task = taskList.getTask(taskNumber - 1);
+        if (!(task instanceof Snoozeable)) {
+            return ui.printError(Messages.UNSNOOZEABLE_ERROR);
+        } else {
+            Snoozeable snoozeTask = (Snoozeable) task;
+            snoozeTask.snooze(snoozeDays);
+            return ui.printMessage(Messages.SNOOZE_MESSAGE, snoozeTask.toString());
+        }
     }
 }

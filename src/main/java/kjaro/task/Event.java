@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * An event is a task with from and to dates.
  */
-public class Event extends Task {
+public class Event extends Task implements Snoozeable {
     private LocalDate fromDate;
     private LocalDate toDate;
 
@@ -21,6 +21,12 @@ public class Event extends Task {
         super(taskName);
         this.fromDate = fromDate;
         this.toDate = toDate;
+    }
+
+    @Override
+    public void snooze(int days) {
+        this.fromDate = this.fromDate.plusDays(days);
+        this.toDate = this.toDate.plusDays(days);
     }
 
     @Override

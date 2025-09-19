@@ -13,6 +13,8 @@ public class Messages {
     public static final String TASK_OOB_ERROR = "That task number doesn't exist!";
     public static final String DELETE_ERROR = "Incorrect input! Use delete <task number> to delete your tasks!";
     public static final String FILE_ERROR = "Unable to access save file!";
+    public static final String SNOOZE_ERROR = "Incorrect input! Use snooze <task number> /for <days> to snooze!";
+    public static final String UNSNOOZEABLE_ERROR = "That task cannot be snoozed!";
     
     public static final String WELCOME_MESSAGE = Format.LOGO + Format.LINE + "\n" + "Hello! I'm Kjaro\n" + "What can I do for you?";
     public static final Function<Integer, String> TASKLIST_MESSAGE = x -> "Here is your task list! You currently have " + x + " task(s)!";
@@ -23,4 +25,5 @@ public class Messages {
     public static final String GOODBYE_MESSAGE = "That's all? See you soon!";
     public static final String FILTERED_LIST_MESSAGE = "Here are the matching tasks in your list:";
     public static final String SAVE_MESSAGE = "Data saved successfully!";
+    public static final String SNOOZE_MESSAGE = "Task snoozed! You'll get it done, right?";
 }
