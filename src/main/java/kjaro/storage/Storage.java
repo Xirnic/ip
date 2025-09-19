@@ -111,6 +111,7 @@ public class Storage {
                     return logSaveError(line);
                 }
             default:
+                assert false : taskType;
                 return logSaveError(line);
             }
             if (isDone) {
