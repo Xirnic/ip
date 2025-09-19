@@ -90,6 +90,7 @@ public class Storage {
             addedTask = loadEvent(arguments);
             break;
         default:
+            assert false : taskType;
             return;
         }
         if (ERR_TASK == addedTask) {
