@@ -28,8 +28,7 @@ public class Storage {
     public static final String SAVE_PATHNAME = "data/SaveFile.txt";
     protected final UI ui;
     protected final File saveFile;
-    protected ArrayList<String> errors = new ArrayList<>();
-    protected boolean isFullyLoaded;
+    protected final Task ERR_TASK = new ToDo("Save Error!");
 
     /**
      * The constructor for Storage.
@@ -51,12 +50,7 @@ public class Storage {
         try {
             if (!saveFile.createNewFile()) {
                 Scanner saveFileScanner = new Scanner(saveFile);
-                while (saveFileScanner.hasNext()) {
-                    String saveResult = readSaveData(saveFileScanner.nextLine(), taskList);
-                    if (saveResult != SUCCESSFUL_STRING) {
-                        errors.add(saveResult);
-                    }
-                }
+                readFile(saveFileScanner, taskList);
                 saveFileScanner.close();
             }
         } catch (IOException e) {
@@ -74,75 +68,37 @@ public class Storage {
      * @return returns a successful string if successful, the erroneous line if
      * unsuccessful.
      */
-    private String readSaveData(String line, TaskList taskList) {
-        final Pattern savePattern = Pattern.compile("(?<taskType>[TDE])" + "\\/" + "(?<isDone>[XO])" + "\\/"
-                                        + "(?<taskName>[^/]+)" + "(?:\\/)?" + "(?<firstDate>[^/]+)?" + "(?:\\/)?"
-                                        + "(?<secondDate>[^/]+)?");
+    private void readSaveData(String line, TaskList taskList) {
+        final Pattern savePattern = Pattern.compile("(?<taskType>[A-Z])" + "\\/" + "(?<isDone>[XO])" + "\\/"
+                                        + "(?<arguments>.*)");
         final Matcher matcher = savePattern.matcher(line);
         if (!matcher.matches()) {
-            return logSaveError(line);
+            return;
         }
         String taskType = matcher.group("taskType");
         boolean isDone = matcher.group("isDone").equals("X");
-        String taskName = matcher.group("taskName");
-        String firstDate = matcher.group("firstDate");
-        String secondDate = matcher.group("secondDate");
+        String arguments = matcher.group("arguments");
         Task addedTask;
-        try {
-            switch (taskType) {
-            case ("T"):
-                addedTask = new ToDo(taskName);
-                break;
-            case ("D"):
-                if (firstDate != null) {
-                    LocalDate deadlineBy = LocalDate.parse(firstDate);
-                    addedTask = new Deadline(taskName, deadlineBy);
-                    break;
-                } else {
-                    return logSaveError(line);
-                }
-            case ("E"):
-                if (firstDate != null && secondDate != null) {
-                    LocalDate eventFrom = LocalDate.parse(firstDate);
-                    LocalDate eventTo = LocalDate.parse(secondDate);
-                    addedTask = new Event(taskName, eventFrom, eventTo);
-                    break;
-                } else {
-                    return logSaveError(line);
-                }
-            default:
-                return logSaveError(line);
-            }
-            if (isDone) {
-                addedTask.markAsDone();
-            }
-            taskList.addToTasks(addedTask);
-            return SUCCESSFUL_STRING;
-        } catch (DateTimeParseException e) {
-            return logSaveError(line);
+        switch (taskType) {
+        case ("T"):
+            addedTask = loadToDo(arguments);
+            break;
+        case ("D"):
+            addedTask = loadDeadline(arguments);
+            break;
+        case ("E"):
+            addedTask = loadEvent(arguments);
+            break;
+        default:
+            return;
         }
-    }
-
-    /**
-     * Currently returns the erroneous line without formatting.
-     * 
-     * @param line the erroneous line in the save file.
-     * @return the erroneous line in the save file.
-     */
-    private String logSaveError(String line) {
-        /*
-         * isFullyLoaded = false; final Pattern savePatternLenient =
-         * Pattern.compile("(?<taskType>.)?" + "(?:\\/)?" + "(?<isDone>.)?" +
-         * "(?:\\/)?" + "(?<taskName>[^/]+)?" + "(?:\\/)?" +
-         * "(?<firstDate>[^/]+)?" + "(?:\\/)?" + "(?<secondDate>[^/]+)?"); final
-         * Matcher matcher = savePatternLenient.matcher(line);
-         * ui.printError(line);
-         */
-        return line;
-    }
-
-    public ArrayList<String> getErrors() {
-        return errors;
+        if (ERR_TASK == addedTask) {
+            return;
+        }
+        if (isDone) {
+            addedTask.markAsDone();
+        }
+        taskList.addToTasks(addedTask);
     }
 
     /**
@@ -161,6 +117,57 @@ public class Storage {
             fw.close();
         } catch (IOException e) {
             ui.printError(Messages.FILE_ERROR);
+        }
+    }
+
+    private void readFile(Scanner scanner, TaskList taskList) {
+        while (scanner.hasNext()) {
+            readSaveData(scanner.nextLine(), taskList);
+        }
+    }
+
+    private Task loadToDo(String arguments) {
+        if (arguments.contains("/") || arguments.equals("")) {
+            return ERR_TASK;
+        }
+        ToDo toDo = new ToDo(arguments);
+        return toDo;
+    }
+
+    private Task loadDeadline(String arguments) {
+        final Pattern deadlinePattern = Pattern.compile("(?<deadlineName>[^/]+)" + "\\/" + "(?<deadlineBy>[^/]+)");
+        final Matcher matcher = deadlinePattern.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            return ERR_TASK;
+        }
+        String deadlineName = matcher.group("deadlineName").trim();
+        String deadlineBy = matcher.group("deadlineBy").trim();
+        try {
+            LocalDate ldDeadlineBy = LocalDate.parse(deadlineBy);
+            Deadline deadline = new Deadline(deadlineName, ldDeadlineBy);
+            return deadline;
+        } catch (DateTimeParseException e) {
+            return ERR_TASK;
+        }
+    }
+
+    private Task loadEvent(String arguments) {
+        final Pattern eventPattern = Pattern.compile("(?<eventName>[^/]+)" + "\\/" + "(?<eventFrom>[^/]+)" + "\\/"
+                + "(?<eventTo>[^/]+)");
+        final Matcher matcher = eventPattern.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            return ERR_TASK;
+        }
+        String eventName = matcher.group("eventName").trim();
+        String eventFrom = matcher.group("eventFrom").trim();
+        String eventTo = matcher.group("eventTo").trim();
+        try {
+            LocalDate ldEventFrom = LocalDate.parse(eventFrom);
+            LocalDate ldEventTo = LocalDate.parse(eventTo);
+            Event event = new Event(eventName, ldEventFrom, ldEventTo);
+            return event;
+        } catch (DateTimeParseException e) {
+            return ERR_TASK;
         }
     }
 }

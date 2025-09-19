@@ -98,13 +98,13 @@ public class Parser {
     }
 
     /**
-     * Attempt to add a todo to the tasklist, printing an error if there are
+     * Attempt to add a todo to the task list, printing an error if there are
      * unexpected arguments
      * @return the message to be printed
      * @param arguments the arguments in the user's input.
      */
     private String tryToDo(String arguments) {
-        if (arguments.contains("/")) {
+        if (arguments.contains("/") || arguments.equals("")) {
             ui.printError(Messages.TODO_ERROR);
         }
         ToDo toDo = new ToDo(arguments);
