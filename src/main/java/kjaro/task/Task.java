@@ -4,7 +4,7 @@ package kjaro.task;
  * Base class for the various types of tasks
  */
 public abstract class Task {
-    private String taskName;
+    private final String taskName;
     private boolean isDone;
 
     /**
@@ -44,23 +44,16 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        if (this.isDone) {
-            return "[X] " + this.taskName;
-        } else {
-            return "[ ] " + this.taskName;
-        }
+        return (isDone ? "[X] " : "[ ] ") + taskName;
     }
+
 
     /**
      * Formats the task into the save file format
-     * 
+     *
      * @return the formatted string to save
      */
     public String toSave() {
-        if (this.isDone) {
-            return "X/" + this.taskName;
-        } else {
-            return "O/" + this.taskName;
-        }
+        return (isDone ? "X/" : "O/") + taskName;
     }
 }

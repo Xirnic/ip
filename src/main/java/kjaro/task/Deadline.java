@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task implements Snoozeable {
 
     private LocalDate dueDate;
+    private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu");
 
     /**
      * The constructor for a deadline.
@@ -28,7 +29,7 @@ public class Deadline extends Task implements Snoozeable {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + dueDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
+        return "[D]" + super.toString() + " (by: " + dueDate.format(DISPLAY_FORMATTER) + ")";
     }
 
     @Override

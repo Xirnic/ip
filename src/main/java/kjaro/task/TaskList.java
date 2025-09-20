@@ -1,6 +1,7 @@
 package kjaro.task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TaskList {
 
@@ -36,7 +37,7 @@ public class TaskList {
     }
 
     public ArrayList<Task> getTasks() {
-        return tasks;
+        return new ArrayList<Task>(tasks);
     }
 
     public Task markTaskDone(int taskNumber) {
@@ -59,7 +60,9 @@ public class TaskList {
 
     public TaskList filterList(String keyword) {
         TaskList filtered = new TaskList();
-        tasks.stream().filter(x -> x.getName().contains(keyword)).forEach(x -> filtered.addToTasks(x));
+        tasks.stream()
+                .filter(x -> x.getName().contains(keyword))
+                .forEach(x -> filtered.addToTasks(x));
         return filtered;
     }
 }

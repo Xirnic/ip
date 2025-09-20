@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task implements Snoozeable {
     private LocalDate fromDate;
     private LocalDate toDate;
-
+    private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu");
     /**
      * The constructor for an Event.
      * 
@@ -31,8 +31,8 @@ public class Event extends Task implements Snoozeable {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
-                                        + " to: " + toDate.format(DateTimeFormatter.ofPattern("dd MMM uuuu")) + ")";
+        return "[E]" + super.toString() + " (from: " + fromDate.format(DISPLAY_FORMATTER)
+                                        + " to: " + toDate.format(DISPLAY_FORMATTER) + ")";
     }
 
     @Override
