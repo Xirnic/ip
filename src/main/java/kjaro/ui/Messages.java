@@ -13,7 +13,7 @@ public class Messages {
     public static final String TASK_OOB_ERROR = "That task number doesn't exist!";
     public static final String DELETE_ERROR = "Incorrect input! Use delete <task number> to delete your tasks!";
     public static final String FILE_ERROR = "Unable to access save file!";
-    public static final String SNOOZE_ERROR = "Incorrect input! Use snooze <task number> /for <days> to snooze!";
+    public static final String SNOOZE_ERROR = "Incorrect input! Use snooze <task number> to snooze, with /for <days> to specify how long.";
     public static final String UNSNOOZEABLE_ERROR = "That task cannot be snoozed!";
     
     public static final String WELCOME_MESSAGE = Format.LOGO + Format.LINE + "\n" + "Hello! I'm Kjaro\n" + "What can I do for you?";

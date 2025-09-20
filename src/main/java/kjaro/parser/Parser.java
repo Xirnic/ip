@@ -2,6 +2,7 @@ package kjaro.parser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,7 +179,7 @@ public class Parser {
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
-            Task task = taskList.markTaskDone(taskNumber - 1);
+            Task task = taskList.markTaskDone(taskNumber);
             return ui.printMessage(Messages.MARK_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
             return ui.printError(Messages.TASK_OOB_ERROR);
@@ -199,7 +200,7 @@ public class Parser {
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
-            Task task = taskList.markTaskUndone(taskNumber - 1);
+            Task task = taskList.markTaskUndone(taskNumber);
             return ui.printMessage(Messages.UNMARK_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
             return ui.printError(Messages.TASK_OOB_ERROR);
@@ -220,7 +221,7 @@ public class Parser {
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
-            Task task = taskList.deleteTask(taskNumber - 1);
+            Task task = taskList.deleteTask(taskNumber);
             return ui.printMessage(Messages.DELETE_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
             return ui.printError(Messages.TASK_OOB_ERROR);
@@ -232,14 +233,15 @@ public class Parser {
     }
 
     private String trySnooze(String arguments) {
-        final Pattern snoozePattern = Pattern.compile("(?<taskNumber>\\d+)" + "\\s*/for\\s*" + "(?<days>\\d+)");
+        final Pattern snoozePattern = Pattern.compile("(?<taskNumber>\\d+)" + "(?:\\s*(?<for>/for)\\s*(?<days>\\d+))?");
         final Matcher matcher = snoozePattern.matcher(arguments);
         if (!matcher.matches()) {
             return ui.printError(Messages.SNOOZE_ERROR);
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
-        int snoozeDays = Integer.valueOf(matcher.group("days"));
-        Task task = taskList.getTask(taskNumber - 1);
+        Optional<String> snoozeString = Optional.ofNullable((matcher.group("days")));
+        int snoozeDays = Integer.valueOf(snoozeString.orElse("1"));
+        Task task = taskList.getTask(taskNumber);
         if (!(task instanceof Snoozeable)) {
             return ui.printError(Messages.UNSNOOZEABLE_ERROR);
         } else {

@@ -40,21 +40,21 @@ public class TaskList {
     }
 
     public Task markTaskDone(int taskNumber) {
-        return tasks.get(taskNumber).markAsDone();
+        return tasks.get(taskNumber - 1).markAsDone();
     }
 
     public Task markTaskUndone(int taskNumber) {
-        return tasks.get(taskNumber).markAsUndone();
+        return tasks.get(taskNumber - 1).markAsUndone();
     }
 
     public Task deleteTask(int taskNumber) {
-        Task removedTask = tasks.get(taskNumber);
-        tasks.remove(taskNumber);
+        Task removedTask = tasks.get(taskNumber - 1);
+        tasks.remove(taskNumber - 1);
         return removedTask;
     }
 
     public Task getTask(int taskNumber) {
-        return tasks.get(taskNumber);
+        return tasks.get(taskNumber - 1);
     }
 
     public TaskList filterList(String keyword) {
