@@ -1,26 +1,65 @@
-# Duke project template
+# Kjaro Task Manager
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Kjaro is a chatbot that will manage your tasks! With Kjaro's help, you can better manage those pesky <ins>todos</ins>, those daunting <ins>deadlines</ins>, and those upcoming <ins>events</ins>!
 
-## Setting up in Intellij
+## Features
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+- The general form for Kjaro's commands are: `commandword` `arguments`
+- Date inputs are only in the `yyyy-mm-dd` format.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+### List
+Lists out all of your tasks.  
+Format: `list`
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+### Save
+Saves all of your data.  
+Format: `save`
+
+### ToDo
+Adds a todo to your task list.  
+Format: `todo` `taskname`  
+Examples:  
+- `todo clean my room`
+- `todo vacuum the floor`
+
+### Deadline
+Adds a deadline to your task list, includes a due date.  
+Format: `deadline` `taskname` `/by` `due date`  
+Examples:
+- `deadline math assignment /by 2025-08-23`
+- `deadline job application /by 2025-09-22`
+
+### Event
+Adds an event to your task list, includes a start and end date.  
+Format: `event` `taskname` `/from` `startdate` `/to` `enddate`
+Examples:
+- `event summer vacation /from 2024-06-10 /to 2024-06-28`
+- `event convention preparation /from 2025-01-22 /to 2025-01-29`
+
+### Snooze
+Delays a task for the chosen number of days, default is one day.  
+Format: `snooze` `tasknumber` `/for` `days`  
+Examples:
+- `snooze 1`
+- `snooze 5 /for 3`
+
+### Marking tasks
+Mark a task as complete or incomplete
+Format: `mark / unmark` `tasknumber`  
+Examples:
+- `mark 5`
+- `unmark 3`
+
+### Deleting tasks
+Deletes a task by task number.  
+Format: `delete` `tasknumber`  
+Examples:
+- `delete 1`
+- `delete 4`
+
+### Finding tasks by name
+Finds a task by a keyword / keyphrase.  
+Format: `find` `keyword`  
+Examples:
+- `find vacation`
+- `find project work`

@@ -3,7 +3,7 @@ package kjaro.ui;
 import java.util.function.Function;
 
 public class Messages {
-    public static final String COMMAND_ERROR = "I don't understand that command @@";
+    public static final String COMMAND_ERROR = "I don't understand that command QaQ";
     public static final String DATE_ERROR = "Unrecognised date format! Use <yyyy-mm-dd>";
     public static final String TODO_ERROR = "Incorrect input! Use todo <task name>";
     public static final String DEADLINE_ERROR = "Incorrect input! Use deadline <task name> /by <due date>";
@@ -18,7 +18,7 @@ public class Messages {
     
     public static final String WELCOME_MESSAGE = Format.LOGO + Format.LINE + "\n" + "Hello! I'm Kjaro\n" + "What can I do for you?";
     public static final Function<Integer, String> TASKLIST_MESSAGE = x -> "Here is your task list! You currently have " + x + " task(s)!";
-    public static final String TASK_ADDED_MESSAGE = "Task added sucessfully!";
+    public static final String TASK_ADDED_MESSAGE = "Task added successfully!";
     public static final Function<Integer, String> MARK_MESSAGE = x -> "Well done! I've marked task " + x + " as done!";
     public static final Function<Integer, String> UNMARK_MESSAGE = x -> "I've marked task " + x + "as undone, you'll get it next time.";
     public static final Function<Integer, String> DELETE_MESSAGE = x -> "Alright, I've deleted task " + x + ".";
