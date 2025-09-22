@@ -3,6 +3,7 @@ package kjaro.storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kjaro.Kjaro;
 import kjaro.task.Deadline;
 import kjaro.task.Event;
 import kjaro.task.Task;
@@ -24,8 +26,6 @@ import kjaro.ui.UI;
  */
 public class Storage {
 
-    public static final String SUCCESSFUL_STRING = "Loaded successfully";
-    public static final String SAVE_PATHNAME = "data/SaveFile.txt";
     protected final UI ui;
     protected final File saveFile;
     protected final Task ERR_TASK = new ToDo("Save Error!");
@@ -37,7 +37,16 @@ public class Storage {
      */
     public Storage(UI ui) {
         this.ui = ui;
-        this.saveFile = new File(SAVE_PATHNAME);
+        this.saveFile = new File(getPath().getParent(), "SaveFile.txt");
+    }
+
+    private static File getPath() {
+        try {
+            return new File(
+                    Kjaro.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

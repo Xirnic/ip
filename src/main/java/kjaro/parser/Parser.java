@@ -241,13 +241,19 @@ public class Parser {
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         Optional<String> snoozeString = Optional.ofNullable((matcher.group("days")));
         int snoozeDays = Integer.valueOf(snoozeString.orElse("1"));
-        Task task = taskList.getTask(taskNumber);
+
+        Task task;
+        try {
+            task = taskList.getTask(taskNumber);
+        } catch (IndexOutOfBoundsException e) {
+            return ui.printError(Messages.TASK_OOB_ERROR);
+        }
         if (!(task instanceof Snoozeable)) {
             return ui.printError(Messages.UNSNOOZEABLE_ERROR);
-        } else {
-            Snoozeable snoozeTask = (Snoozeable) task;
-            snoozeTask.snooze(snoozeDays);
-            return ui.printMessage(Messages.SNOOZE_MESSAGE, snoozeTask.toString());
         }
+
+        Snoozeable snoozeTask = (Snoozeable) task;
+        snoozeTask.snooze(snoozeDays);
+        return ui.printMessage(Messages.SNOOZE_MESSAGE, snoozeTask.toString());
     }
 }
