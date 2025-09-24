@@ -8,6 +8,10 @@ import kjaro.task.TaskList;
 import kjaro.ui.Messages;
 import kjaro.ui.UI;
 
+/**
+ * Represents a chatbot that can manage 3 types of tasks, with varying features involving due
+ * dates, marking as done, and snoozing.
+ */
 public class Kjaro {
 
     private UI ui;
@@ -16,9 +20,7 @@ public class Kjaro {
     private Storage storage;
 
     /**
-     * Kjaro, a chatbot that manages a task list, supporting addition, deletion,
-     * saving, as well as 3 types of tasks that can be marked as done and
-     * undone.
+     * Constructs a new Kjaro instance, and automatically loads data from the save file.
      */
     public Kjaro() {
         ui = new UI();

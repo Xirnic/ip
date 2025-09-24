@@ -1,9 +1,16 @@
 package kjaro.ui;
 
 
-
+/**
+ * Represents the formatting of Kjaro's messages.
+ */
 public class UI {
 
+    /**
+     * Formats multiple messages into one single message.
+     * @param messages One or more messages to be printed.
+     * @return The formatted message.
+     */
     public String printMessage(String... messages) {
         String finalMessage = "";
         finalMessage += Format.LINE + "\n";
@@ -14,6 +21,11 @@ public class UI {
         return finalMessage;
     }
 
+    /**
+     * Formats an error message.
+     * @param message A single-line error message.
+     * @return the formatted error message.
+     */
     public String printError(String message) {
         String finalMessage = "";
         finalMessage += Format.ERR_LINE + "\n";
@@ -22,6 +34,10 @@ public class UI {
         return finalMessage;
     }
 
+    /**
+     * Formats Kjaro's default welcome message.
+     * @return The formatted welcome message.
+     */
     public String printWelcome() {
         String finalMessage = "";
         finalMessage += Format.LINE + "\n";
