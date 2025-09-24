@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * A Deadline is a task with a due date
+ * Represents a task with a specified due date.
  */
 public class Deadline extends Task implements Snoozeable {
 
@@ -12,10 +12,10 @@ public class Deadline extends Task implements Snoozeable {
     private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu");
 
     /**
-     * The constructor for a deadline.
+     * Constructs a new Deadline.
      * 
-     * @param taskName the name of the deadline
-     * @param dueDate the date at which the deadline is due
+     * @param taskName the name of the task.
+     * @param dueDate the due date of the task.
      */
     public Deadline(String taskName, LocalDate dueDate) {
         super(taskName);

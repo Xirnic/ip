@@ -1,15 +1,15 @@
 package kjaro.task;
 
 /**
- * A todo is the simplest task, with no additional features
+ * Represents a task with no due date.
  */
 
 public class ToDo extends Task {
 
     /**
-     * Constructor for a ToDo
-     * 
-     * @param taskName the name of the ToDo
+     * Constructs a new ToDo.
+     *
+     * @param taskName the name of the task.
      */
     public ToDo(String taskName) {
         super(taskName);

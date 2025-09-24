@@ -8,8 +8,8 @@ public abstract class Task {
     private boolean isDone;
 
     /**
-     * The constructor for a task. By default, it is marked as undone.
-     * 
+     * Constructs a task.
+     * Marked undone by default.
      * @param taskName the name of the task.
      */
     public Task(String taskName) {
@@ -23,9 +23,9 @@ public abstract class Task {
     }
 
     /**
-     * Marks a task as done
+     * Marks a task as done.
      * 
-     * @return the marked task
+     * @return the marked task.
      */
     public Task markAsDone() {
         this.isDone = true;
@@ -33,9 +33,9 @@ public abstract class Task {
     }
 
     /**
-     * Marks a task as undone
+     * Marks a task as undone.
      * 
-     * @return the marked task
+     * @return the marked task.
      */
     public Task markAsUndone() {
         this.isDone = false;
@@ -49,9 +49,9 @@ public abstract class Task {
 
 
     /**
-     * Formats the task into the save file format
+     * Formats the task into the save file format.
      *
-     * @return the formatted string to save
+     * @return the formatted string to save.
      */
     public String toSave() {
         return (isDone ? "X/" : "O/") + taskName;

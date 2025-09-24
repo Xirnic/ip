@@ -4,18 +4,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * An event is a task with from and to dates.
+ * Represents a task with a start and end date
  */
 public class Event extends Task implements Snoozeable {
+
     private LocalDate fromDate;
     private LocalDate toDate;
     private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu");
+
     /**
-     * The constructor for an Event.
+     * Constructs a new event
      * 
-     * @param taskName the name of the event.
-     * @param fromDate the start date (from) of the event.
-     * @param toDate the end date (to) of the event.
+     * @param taskName the name of the task.
+     * @param fromDate the start date of the task.
+     * @param toDate the end date of the task.
      */
     public Event(String taskName, LocalDate fromDate, LocalDate toDate) {
         super(taskName);
