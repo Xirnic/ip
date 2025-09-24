@@ -21,8 +21,7 @@ import kjaro.ui.Messages;
 import kjaro.ui.UI;
 
 /**
- * The storage class, managing writing and reading from a predetermined save
- * file format.
+ * Represents the storage component of Kjaro, to save and read data.
  */
 public class Storage {
 
@@ -31,7 +30,7 @@ public class Storage {
     protected final Task ERR_TASK = new ToDo("Save Error!");
 
     /**
-     * The constructor for Storage.
+     * The constructor for a Storage.
      * 
      * @param ui for error printing.
      */
@@ -50,7 +49,7 @@ public class Storage {
     }
 
     /**
-     * Reads the associated save file, and creates a new file if one isn't found
+     * Reads the associated save file, and creates a new file if one isn't found.
      * 
      * @return TaskList with loaded tasks.
      */
@@ -68,15 +67,6 @@ public class Storage {
         return taskList;
     }
 
-    /**
-     * Reads a single line of the save file, adding the task to the list if
-     * successful.
-     * 
-     * @param line the line of the save file to be read.
-     * @param taskList the TaskList for the task to be added to.
-     * @return returns a successful string if successful, the erroneous line if
-     * unsuccessful.
-     */
     private void readSaveData(String line, TaskList taskList) {
         final Pattern savePattern = Pattern.compile("(?<taskType>[A-Z])" + "\\/" + "(?<isDone>[XO])" + "\\/"
                                         + "(?<arguments>.*)");
@@ -112,9 +102,9 @@ public class Storage {
     }
 
     /**
-     * Converts a tasklist into its save format and writes it in the save file.
+     * Converts a task list into its save format and writes it in the save file.
      * 
-     * @param taskList the tasklist to be saved
+     * @param taskList the task list to be saved.
      */
     public void writeSaveData(TaskList taskList) {
         try {
