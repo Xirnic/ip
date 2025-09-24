@@ -12,7 +12,7 @@ import kjaro.ui.Messages;
 import kjaro.ui.UI;
 
 /**
- * A simple parser for the commands supported by Kjaro.
+ * Represents a parser for Kjaro's supported commands.
  */
 public class Parser {
 
@@ -20,6 +20,12 @@ public class Parser {
     protected UI ui;
     protected Storage storage;
 
+    /**
+     * Constructs a new parser
+     * @param taskList the task list that the commands will be carried out on.
+     * @param ui the UI to print system messages.
+     * @param storage The storage to access saved data.
+     */
     public Parser(TaskList taskList, UI ui, Storage storage) {
         this.taskList = taskList;
         this.ui = ui;
@@ -27,10 +33,10 @@ public class Parser {
     }
 
     /**
-     * Parses the user input, converting it to functions supported by Kjaro.
+     * Parses the user input, converting to and executing commands supported by Kjaro.
      * 
      * @param input the user input.
-     * @return boolea, whether Kjaro should keep running.
+     * @return whether Kjaro should keep running.
      */
     public String parseInput(String input) {
         final Pattern commandPattern = Pattern.compile("(?<commandWord>\\S+)" + "(?<arguments>.*)");
@@ -70,7 +76,7 @@ public class Parser {
     }
 
     /**
-     * Displays the full list of tasks using the UI class.
+     * Displays the numbered list of tasks.
      */
     private String displayList(String initialMessage, TaskList taskList) {
         String[] taskListDisplay = taskList.getTasks().stream().map(x -> x.toString()).toArray(String[]::new);
@@ -84,23 +90,28 @@ public class Parser {
     }
 
     /**
-     * Prints the goodbye message, before saving the current data.
+     * Saves data, before exiting
+     * @return the exit message
      */
     private String exit() {
         storage.writeSaveData(taskList);
         return ui.printMessage(Messages.GOODBYE_MESSAGE);
     }
 
+    /**
+     * Saves the current data
+     * @return the save successful message
+     */
     private String save() {
         storage.writeSaveData(taskList);
         return ui.printMessage(Messages.SAVE_MESSAGE);
     }
 
     /**
-     * Attempt to add a todo to the task list, printing an error if there are
-     * unexpected arguments
-     * @return the message to be printed
-     * @param arguments the arguments in the user's input.
+     * Attempts to instantiate and add a todo to the task list.
+     *
+     * @param arguments the arguments from the user's input.
+     * @return the success / error message.
      */
     private String tryToDo(String arguments) {
         if (arguments.contains("/") || arguments.equals("")) {
@@ -112,10 +123,10 @@ public class Parser {
     }
 
     /**
-     * Attempts to add a deadline to the tasklist, printing an error if there
-     * are unexpected arguments.
-     * @return the message to be printed
+     * Attempts to instantiate and add a deadline to the task list.
+     *
      * @param arguments the arguments in the user's input.
+     * @return the success / error message.
      */
     private String tryDeadline(String arguments) {
         final Pattern deadlinePattern = Pattern.compile("(?<deadlineName>[^/]+)" + "\\/by" + "(?<deadlineBy>[^/]+)");
@@ -137,10 +148,10 @@ public class Parser {
     }
 
     /**
-     * Attempts to add a event to the tasklist, printing an error if there are
-     * unexpected arguments.
-     * @return the message to be printed
+     * Attempts to instantiate and add an event to the task list.
+     *
      * @param arguments the arguments in the user's input.
+     * @return the success / error message.
      */
     private String tryEvent(String arguments) {
         final Pattern eventPattern = Pattern.compile("(?<eventName>[^/]+)" + "\\/from" + "(?<eventFrom>[^/]+)" + "\\/to"
@@ -166,10 +177,10 @@ public class Parser {
     }
 
     /**
-     * Attempts to mark a task as done, printing an error if the argument isn't
-     * a number or is out of bounds.
-     * 
-     * @param arguments the arguments in the user's inputs.
+     * Attempts to mark a task as done in the task list by task number.
+     *
+     * @param arguments the arguments in the user's input.
+     * @return the success / error message.
      */
     private String tryMark(String arguments) {
         final Pattern markPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
@@ -187,10 +198,10 @@ public class Parser {
     }
 
     /**
-     * Attempts to mark a task as undone, printing an error if the argument
-     * isn't a number or is out of bounds.
-     * 
-     * @param arguments the arguments in the user's inputs.
+     * Attempts to mark a task as undone in the task list by task number.
+     *
+     * @param arguments the arguments in the user's input.
+     * @return the success / error message.
      */
     private String tryUnmark(String arguments) {
         final Pattern unmarkPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
@@ -208,10 +219,10 @@ public class Parser {
     }
 
     /**
-     * Attempts to delete a task, printing an error if the argument isn't a
-     * number or is out of bounds.
-     * 
-     * @param arguments the arguments in the user's inputs.
+     * Attempts to delete a task from the task list by task number.
+     *
+     * @param arguments the arguments in the user's input.
+     * @return the success / error message.
      */
     private String tryDelete(String arguments) {
         final Pattern deletePattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
@@ -228,10 +239,22 @@ public class Parser {
         }
     }
 
+    /**
+     * Filters the task list by keyword / keyphrase.
+     * @param arguments the arguments in the user's input.
+     * @return the filtered, numbered task list.
+     */
     private String filterList(String arguments) {
         return displayList(Messages.FILTERED_LIST_MESSAGE,taskList.filterList(arguments));
     }
 
+    /**
+     * Attempts to snooze a task in the task list by task number.
+     * Snooze duration can be specified, with a default value of 1 day.
+     *
+     * @param arguments the arguments in the user's input.
+     * @return the success / error message.
+     */
     private String trySnooze(String arguments) {
         final Pattern snoozePattern = Pattern.compile("(?<taskNumber>\\d+)" + "(?:\\s*(?<for>/for)\\s*(?<days>\\d+))?");
         final Matcher matcher = snoozePattern.matcher(arguments);
