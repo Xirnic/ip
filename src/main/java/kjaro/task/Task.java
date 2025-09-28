@@ -47,7 +47,6 @@ public abstract class Task {
         return (isDone ? "[X] " : "[ ] ") + taskName;
     }
 
-
     /**
      * Formats the task into the save file format.
      *

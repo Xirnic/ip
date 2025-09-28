@@ -36,5 +36,4 @@ public class Deadline extends Task implements Snoozeable {
     public String toSave() {
         return "D/" + super.toSave() + "/" + dueDate;
     }
-
 }
