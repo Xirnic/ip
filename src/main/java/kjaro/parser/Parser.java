@@ -19,6 +19,7 @@ public class Parser {
     protected TaskList taskList;
     protected UI ui;
     protected Storage storage;
+    private final Pattern TASK_NUMBER_PATTERN = Pattern.compile("(?<taskNumber>^[0-9]+$)");
 
     /**
      * Constructs a new parser
@@ -183,8 +184,7 @@ public class Parser {
      * @return the success / error message.
      */
     private String tryMark(String arguments) {
-        final Pattern markPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
-        final Matcher matcher = markPattern.matcher(arguments);
+        final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
             return ui.printError(Messages.MARK_ERROR);
         }
@@ -204,8 +204,7 @@ public class Parser {
      * @return the success / error message.
      */
     private String tryUnmark(String arguments) {
-        final Pattern unmarkPattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
-        final Matcher matcher = unmarkPattern.matcher(arguments);
+        final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
             return ui.printError(Messages.UNMARK_ERROR);
         }
@@ -225,8 +224,7 @@ public class Parser {
      * @return the success / error message.
      */
     private String tryDelete(String arguments) {
-        final Pattern deletePattern = Pattern.compile("(?<taskNumber>^[0-9]+$)");
-        final Matcher matcher = deletePattern.matcher(arguments);
+        final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
             return ui.printError(Messages.DELETE_ERROR);
         }
