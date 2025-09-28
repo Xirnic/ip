@@ -46,7 +46,7 @@ public class TaskList {
 
     /**
      * Marks a task in the list as done.
-     * @param taskNumber the number associated with the task.
+     * @param taskNumber task number based on 1-indexing.
      * @return the marked task
      */
     public Task markTaskDone(int taskNumber) {
@@ -55,19 +55,29 @@ public class TaskList {
 
     /**
      * Marks a task in the list as undone.
-     * @param taskNumber the number associated with the task.
+     * @param taskNumber task number based on 1-indexing.
      * @return the marked task
      */
     public Task markTaskUndone(int taskNumber) {
         return tasks.get(taskNumber - 1).markAsUndone();
     }
 
+    /**
+     * Deletes the task based on its number displayed on the list.
+     * @param taskNumber task number based on 1-indexing.
+     * @return the deleted task.
+     */
     public Task deleteTask(int taskNumber) {
         Task removedTask = tasks.get(taskNumber - 1);
         tasks.remove(taskNumber - 1);
         return removedTask;
     }
 
+    /**
+     * Gets the task based on its number displayed on the list.
+     * @param taskNumber task number based on 1-indexing.
+     * @return the task.
+     */
     public Task getTask(int taskNumber) {
         return tasks.get(taskNumber - 1);
     }
