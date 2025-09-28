@@ -35,12 +35,12 @@ public class Kjaro {
     }
 
     private void run() {
-        ui.printWelcome();
+        ui.formatWelcome();
         Scanner reader = new Scanner(System.in);
         boolean isRunning = true;
         while (isRunning) {
             String message = reader.nextLine().trim();
-            isRunning = parser.parseInput(message) != ui.printMessage(Messages.GOODBYE_MESSAGE);
+            isRunning = parser.parseInput(message) != ui.formatMessage(Messages.GOODBYE_MESSAGE);
         }
         reader.close();
     }
@@ -53,6 +53,6 @@ public class Kjaro {
     }
 
     public String getWelcome() {
-        return ui.printWelcome() + "\n";
+        return ui.formatWelcome() + "\n";
     }
 }

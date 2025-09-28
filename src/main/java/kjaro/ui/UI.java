@@ -11,7 +11,7 @@ public class UI {
      * @param messages One or more messages to be printed.
      * @return The formatted message.
      */
-    public String printMessage(String... messages) {
+    public String formatMessage(String... messages) {
         String finalMessage = "";
         finalMessage += Format.LINE + "\n";
         for (int i = 0; i < messages.length; i++) {
@@ -26,7 +26,7 @@ public class UI {
      * @param message A single-line error message.
      * @return the formatted error message.
      */
-    public String printError(String message) {
+    public String formatErrorMessage(String message) {
         String finalMessage = "";
         finalMessage += Format.ERR_LINE + "\n";
         finalMessage += message + "\n";
@@ -38,7 +38,7 @@ public class UI {
      * Formats Kjaro's default welcome message.
      * @return The formatted welcome message.
      */
-    public String printWelcome() {
+    public String formatWelcome() {
         String finalMessage = "";
         finalMessage += Format.LINE + "\n";
         finalMessage += Messages.WELCOME_MESSAGE + "\n";

@@ -3,10 +3,8 @@ package kjaro.storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,7 +60,7 @@ public class Storage {
                 saveFileScanner.close();
             }
         } catch (IOException e) {
-            ui.printError(Messages.FILE_ERROR);
+            ui.formatErrorMessage(Messages.FILE_ERROR);
         }
         return taskList;
     }
@@ -116,7 +114,7 @@ public class Storage {
             fw.write(saveData);
             fw.close();
         } catch (IOException e) {
-            ui.printError(Messages.FILE_ERROR);
+            ui.formatErrorMessage(Messages.FILE_ERROR);
         }
     }
 

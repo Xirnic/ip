@@ -43,7 +43,7 @@ public class Parser {
         final Pattern commandPattern = Pattern.compile("(?<commandWord>\\S+)" + "(?<arguments>.*)");
         final Matcher matcher = commandPattern.matcher(input.trim());
         if (!matcher.matches()) {
-            ui.printError(Messages.COMMAND_ERROR);
+            ui.formatErrorMessage(Messages.COMMAND_ERROR);
         }
         final String commandWord = matcher.group("commandWord").trim();
         final String arguments = matcher.group("arguments").trim();
@@ -72,7 +72,7 @@ public class Parser {
         case ("snooze"):
             return trySnooze(arguments);
         default:
-            return ui.printError(Messages.COMMAND_ERROR);
+            return ui.formatErrorMessage(Messages.COMMAND_ERROR);
         }
     }
 
@@ -87,7 +87,7 @@ public class Parser {
         String[] fullMessage = new String[1 + taskListDisplay.length];
         fullMessage[0] = initialMessage;
         System.arraycopy(taskListDisplay, 0, fullMessage, 1, taskListDisplay.length);
-        return ui.printMessage(fullMessage);
+        return ui.formatMessage(fullMessage);
     }
 
     /**
@@ -96,7 +96,7 @@ public class Parser {
      */
     private String exit() {
         storage.writeSaveData(taskList);
-        return ui.printMessage(Messages.GOODBYE_MESSAGE);
+        return ui.formatMessage(Messages.GOODBYE_MESSAGE);
     }
 
     /**
@@ -105,7 +105,7 @@ public class Parser {
      */
     private String save() {
         storage.writeSaveData(taskList);
-        return ui.printMessage(Messages.SAVE_MESSAGE);
+        return ui.formatMessage(Messages.SAVE_MESSAGE);
     }
 
     /**
@@ -116,11 +116,11 @@ public class Parser {
      */
     private String tryToDo(String arguments) {
         if (arguments.contains("/") || arguments.equals("")) {
-            ui.printError(Messages.TODO_ERROR);
+            ui.formatErrorMessage(Messages.TODO_ERROR);
         }
         ToDo toDo = new ToDo(arguments);
         taskList.addToTasks(toDo);
-        return ui.printMessage(Messages.TASK_ADDED_MESSAGE, toDo.toString());
+        return ui.formatMessage(Messages.TASK_ADDED_MESSAGE, toDo.toString());
     }
 
     /**
@@ -133,7 +133,7 @@ public class Parser {
         final Pattern deadlinePattern = Pattern.compile("(?<deadlineName>[^/]+)" + "\\/by" + "(?<deadlineBy>[^/]+)");
         final Matcher matcher = deadlinePattern.matcher(arguments.trim());
         if (!matcher.matches()) {
-            return ui.printError(Messages.DEADLINE_ERROR);
+            return ui.formatErrorMessage(Messages.DEADLINE_ERROR);
         }
         String deadlineName = matcher.group("deadlineName").trim();
         String deadlineBy = matcher.group("deadlineBy").trim();
@@ -142,9 +142,9 @@ public class Parser {
             LocalDate ldDeadlineBy = LocalDate.parse(deadlineBy);
             Deadline deadline = new Deadline(deadlineName, ldDeadlineBy);
             taskList.addToTasks(deadline);
-            return ui.printMessage(Messages.TASK_ADDED_MESSAGE, deadline.toString());
+            return ui.formatMessage(Messages.TASK_ADDED_MESSAGE, deadline.toString());
         } catch (DateTimeParseException e) {
-            return ui.printError(Messages.DATE_ERROR);
+            return ui.formatErrorMessage(Messages.DATE_ERROR);
         }
     }
 
@@ -159,7 +159,7 @@ public class Parser {
                                         + "(?<eventTo>[^/]+)");
         final Matcher matcher = eventPattern.matcher(arguments.trim());
         if (!matcher.matches()) {
-            return ui.printError(Messages.EVENT_ERROR);
+            return ui.formatErrorMessage(Messages.EVENT_ERROR);
         }
         String eventName = matcher.group("eventName").trim();
         String eventFrom = matcher.group("eventFrom").trim();
@@ -170,10 +170,10 @@ public class Parser {
             LocalDate ldEventTo = LocalDate.parse(eventTo);
             Event event = new Event(eventName, ldEventFrom, ldEventTo);
             taskList.addToTasks(event);
-            return ui.printMessage(Messages.TASK_ADDED_MESSAGE, event.toString());
+            return ui.formatMessage(Messages.TASK_ADDED_MESSAGE, event.toString());
 
         } catch (DateTimeParseException e) {
-            return ui.printError(Messages.DATE_ERROR);
+            return ui.formatErrorMessage(Messages.DATE_ERROR);
         }
     }
 
@@ -186,14 +186,14 @@ public class Parser {
     private String tryMark(String arguments) {
         final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
-            return ui.printError(Messages.MARK_ERROR);
+            return ui.formatErrorMessage(Messages.MARK_ERROR);
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
             Task task = taskList.markTaskDone(taskNumber);
-            return ui.printMessage(Messages.MARK_MESSAGE.apply(taskNumber), task.toString());
+            return ui.formatMessage(Messages.MARK_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
-            return ui.printError(Messages.TASK_OOB_ERROR);
+            return ui.formatErrorMessage(Messages.TASK_OOB_ERROR);
         }
     }
 
@@ -206,14 +206,14 @@ public class Parser {
     private String tryUnmark(String arguments) {
         final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
-            return ui.printError(Messages.UNMARK_ERROR);
+            return ui.formatErrorMessage(Messages.UNMARK_ERROR);
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
             Task task = taskList.markTaskUndone(taskNumber);
-            return ui.printMessage(Messages.UNMARK_MESSAGE.apply(taskNumber), task.toString());
+            return ui.formatMessage(Messages.UNMARK_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
-            return ui.printError(Messages.TASK_OOB_ERROR);
+            return ui.formatErrorMessage(Messages.TASK_OOB_ERROR);
         }
     }
 
@@ -226,14 +226,14 @@ public class Parser {
     private String tryDelete(String arguments) {
         final Matcher matcher = TASK_NUMBER_PATTERN.matcher(arguments);
         if (!matcher.matches()) {
-            return ui.printError(Messages.DELETE_ERROR);
+            return ui.formatErrorMessage(Messages.DELETE_ERROR);
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         try {
             Task task = taskList.deleteTask(taskNumber);
-            return ui.printMessage(Messages.DELETE_MESSAGE.apply(taskNumber), task.toString());
+            return ui.formatMessage(Messages.DELETE_MESSAGE.apply(taskNumber), task.toString());
         } catch (IndexOutOfBoundsException e) {
-            return ui.printError(Messages.TASK_OOB_ERROR);
+            return ui.formatErrorMessage(Messages.TASK_OOB_ERROR);
         }
     }
 
@@ -257,7 +257,7 @@ public class Parser {
         final Pattern snoozePattern = Pattern.compile("(?<taskNumber>\\d+)" + "(?:\\s*(?<for>/for)\\s*(?<days>\\d+))?");
         final Matcher matcher = snoozePattern.matcher(arguments);
         if (!matcher.matches()) {
-            return ui.printError(Messages.SNOOZE_ERROR);
+            return ui.formatErrorMessage(Messages.SNOOZE_ERROR);
         }
         int taskNumber = Integer.valueOf(matcher.group("taskNumber"));
         Optional<String> snoozeString = Optional.ofNullable((matcher.group("days")));
@@ -267,14 +267,14 @@ public class Parser {
         try {
             task = taskList.getTask(taskNumber);
         } catch (IndexOutOfBoundsException e) {
-            return ui.printError(Messages.TASK_OOB_ERROR);
+            return ui.formatErrorMessage(Messages.TASK_OOB_ERROR);
         }
         if (!(task instanceof Snoozeable)) {
-            return ui.printError(Messages.UNSNOOZEABLE_ERROR);
+            return ui.formatErrorMessage(Messages.UNSNOOZEABLE_ERROR);
         }
 
         Snoozeable snoozeTask = (Snoozeable) task;
         snoozeTask.snooze(snoozeDays);
-        return ui.printMessage(Messages.SNOOZE_MESSAGE, snoozeTask.toString());
+        return ui.formatMessage(Messages.SNOOZE_MESSAGE, snoozeTask.toString());
     }
 }
